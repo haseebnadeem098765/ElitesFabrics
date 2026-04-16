@@ -48,19 +48,7 @@ export default function Navbar() {
               src={content?.global?.images?.logo || "https://res.cloudinary.com/detwuzqry/image/upload/v1775717220/stitcheerr_assets/logo.png"}
             />
           </Link>
-          <div className="hidden lg:flex flex-1 max-w-md mx-8">
-            <div className="relative w-full group">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">search</span>
-              <input
-                type="text"
-                placeholder="Search fabrics, industries..."
-                className="w-full pl-10 pr-4 py-2 bg-slate-100 hover:bg-slate-200 focus:bg-white border-transparent focus:border-primary border-2 rounded-xl text-sm transition-all outline-none"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && navigate(`/fabrics?search=${searchQuery}`)}
-              />
-            </div>
-          </div>
+
           <div className="hidden lg:flex items-center gap-8">
             <Link to="/" className={getLinkClass('/')}>Home</Link>
             <Link to="/about" className={getLinkClass('/about')}>About Us</Link>
@@ -104,20 +92,7 @@ export default function Navbar() {
               </button>
           </div>
         </div>
-        {/* Mobile Search Bar */}
-        <div className="lg:hidden px-4 pb-3">
-          <div className="relative w-full">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 text-sm">search</span>
-            <input
-              type="text"
-              placeholder="Search fabrics..."
-              className="w-full pl-10 pr-4 py-2 bg-slate-100 rounded-lg text-sm outline-none border-none focus:ring-1 focus:ring-primary"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && navigate(`/fabrics?search=${searchQuery}`)}
-            />
-          </div>
-        </div>
+
         {/* Mobile Menu Dropdown */}
         {isMobileMenuOpen && (
             <div className="lg:hidden bg-white shadow-xl absolute w-full left-0 flex flex-col pt-2 border-b border-outline-variant/10">
