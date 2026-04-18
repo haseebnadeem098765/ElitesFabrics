@@ -9,7 +9,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
   const [otp, setOtp] = useState('');
   
   const dispatch = useDispatch();
-  const { loading, error, isUserAuthenticated, requiresVerification, registeredEmail, registrationToken } = useSelector((state) => state.auth);
+  const { loading, error, isUserAuthenticated, requiresVerification, registrationToken } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (isUserAuthenticated && isOpen) {
@@ -20,6 +20,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
 
   useEffect(() => {
     if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsLogin(true); // Always default to login when opening
       dispatch(clearError());
     }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { submitContactForm, clearMessages } from '../features/contacts/contactSlice';
+import { submitContactForm } from '../features/contacts/contactSlice';
 import SEO from '../components/SEO';
 
 const ContactUs = () => {
@@ -57,9 +57,9 @@ const ContactUs = () => {
                     <img className="w-full h-full object-cover opacity-60" data-alt="Elite Fabrics Logo" src={"https://res.cloudinary.com/detwuzqry/image/upload/v1775717220/stitcheerr_assets/logo.png"}/>
                     <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent"></div>
                 </div>
-                <div className="container mx-auto px-8 relative z-10">
-                    <h1 className="text-5xl md:text-7xl font-extrabold font-headline mb-4">Let&apos;s Connect.</h1>
-                    <p className="text-xl text-on-surface-variant max-w-xl font-light">Have a query about our fabric blends or need to request a bulk sample? Our team is ready to assist you.</p>
+                <div className="container mx-auto px-8 relative z-10 overflow-hidden">
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold font-headline mb-4 break-words">Let&apos;s Connect.</h1>
+                    <p className="text-lg sm:text-xl text-on-surface-variant max-w-full font-light break-words">Have a query about our fabric blends or need to request a bulk sample? Our team is ready to assist you.</p>
                 </div>
             </section>
 

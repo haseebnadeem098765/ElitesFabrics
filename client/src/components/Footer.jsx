@@ -9,16 +9,18 @@ export default function Footer() {
   const [popup, setPopup] = useState({ isOpen: false, type: '', message: '' });
   
   const dispatch = useDispatch();
-  const { loading, error, successMessage } = useSelector((state) => state.newsletter);
+  const { error, successMessage } = useSelector((state) => state.newsletter);
   const content = useSelector((state) => state.content.data);
 
   useEffect(() => {
     if (successMessage) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPopup({ isOpen: true, type: 'success', message: successMessage });
       setEmail('');
       dispatch(clearMessages());
     }
     if (error) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPopup({ isOpen: true, type: 'error', message: error });
       dispatch(clearMessages());
     }

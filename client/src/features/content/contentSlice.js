@@ -14,7 +14,8 @@ const getErrorMessage = (err) => {
 
 // 🔹 Get Token safely
 const getToken = (getState) => {
-  return getState()?.auth?.token || null;
+  const state = getState();
+  return state?.auth?.adminToken || state?.auth?.userToken || null;
 };
 
 // =======================
@@ -143,9 +144,9 @@ const contentSlice = createSlice({
       .addCase(updateContent.fulfilled, (state, action) => {
         state.updateLoading = false;
         state.updateSuccess = 'Content updated successfully';
-
-        // Merge new data with old
-        state.data = { ...state.data, ...action.payload };
+        const { page, section, data } = action.payload.content;
+        if (!state.data[page]) state.data[page] = {};
+        state.data[page][section] = data;
       })
       .addCase(updateContent.rejected, (state, action) => {
         state.updateLoading = false;

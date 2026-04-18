@@ -25,18 +25,22 @@ const ManageContent = () => {
     useEffect(() => {
         const pageData = storeData?.[contentKeys.page] || {};
         const sectionData = pageData[contentKeys.section] || {};
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setFormData(sectionData);
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setJsonString(JSON.stringify(sectionData, null, 2));
     }, [contentKeys, storeData]);
 
     // Handle feedback messages
     useEffect(() => {
         if (updateSuccess) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setStatus(updateSuccess);
             dispatch(clearMessages());
             setTimeout(() => setStatus(''), 3000);
         }
         if (updateError) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setStatus(`Error: ${updateError}`);
             dispatch(clearMessages());
         }
@@ -55,7 +59,7 @@ const ManageContent = () => {
         if (isAdvancedMode) {
             try {
                 dataToSave = JSON.parse(jsonString);
-            } catch (e) {
+            } catch {
                 setStatus('Error: Invalid JSON format');
                 return;
             }
@@ -66,6 +70,24 @@ const ManageContent = () => {
             section: contentKeys.section,
             data: dataToSave
         }));
+    };
+
+    const handleInitialize = () => {
+        // Simple templates for initial data
+        const templates = {
+            hero: { title: 'New Hero Title', subtitle: 'Add your subtitle here', image: '', ctaText: 'Learn More', ctaLink: '#' },
+            features: { title: 'Our Services', subtitle: 'What we offer', items: [{ title: 'Service 1', description: 'Description here', image: '' }] },
+            testimonials: { title: 'Testimonials', items: [{ name: 'John Doe', role: 'CEO', text: 'Great service!', initials: 'JD' }] },
+            cta: { title: 'Ready to start?', subtitle: 'Contact us today', buttonText: 'Get Quote' },
+            images: { logo: '', favicon: '' },
+            contact_info: { email: '', phone: '', address: '' },
+            info: { title: 'Contact Us', subtitle: 'Get in touch' }
+        };
+
+        const template = templates[contentKeys.section] || { title: 'New Section', content: 'Add content here' };
+        setFormData(template);
+        setJsonString(JSON.stringify(template, null, 2));
+        setStatus('Template loaded. Click Publish to save.');
     };
 
     const handleImageUpload = async (key) => {
@@ -245,9 +267,17 @@ const ManageContent = () => {
                                 {Object.keys(formData).length > 0 ? (
                                     Object.keys(formData).map(key => renderFormField(key, formData[key]))
                                 ) : (
-                                    <div className="text-center py-20 border-2 border-dashed border-gray-100 rounded-xl">
-                                        <p className="text-gray-400 font-medium italic text-sm">No fields found for this section.</p>
-                                        <p className="text-gray-300 text-xs mt-2">Use Advanced Mode to add initial data structure.</p>
+                                    <div className="text-center py-20 border-2 border-dashed border-gray-100 rounded-xl space-y-4">
+                                        <div>
+                                            <p className="text-gray-400 font-medium italic text-sm">No fields found for this section.</p>
+                                            <p className="text-gray-300 text-xs mt-2">Use Advanced Mode to add initial data structure or use the template below.</p>
+                                        </div>
+                                        <button 
+                                            onClick={handleInitialize}
+                                            className="px-6 py-2 bg-gray-100 text-gray-600 font-bold rounded-lg hover:bg-gray-200 transition-all text-xs"
+                                        >
+                                            Load Section Template
+                                        </button>
                                     </div>
                                 )}
                             </div>

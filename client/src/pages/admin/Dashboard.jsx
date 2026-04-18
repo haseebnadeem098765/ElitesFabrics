@@ -3,20 +3,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchAdminContacts } from '../../features/contacts/contactSlice';
 import { fetchAdminQuotes } from '../../features/quotes/quoteSlice';
+import { fetchAdminNewsletters } from '../../features/newsletter/newsletterSlice';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const contacts = useSelector((state) => state.contacts.data);
   const quotes = useSelector((state) => state.quotes.data);
+  const subscribers = useSelector((state) => state.newsletter.data);
 
   const stats = {
     contacts: contacts?.length || 0,
-    quotes: quotes?.length || 0
+    quotes: quotes?.length || 0,
+    subscribers: subscribers?.length || 0
   };
 
   useEffect(() => {
     dispatch(fetchAdminContacts());
     dispatch(fetchAdminQuotes());
+    dispatch(fetchAdminNewsletters());
   }, [dispatch]);
 
   return (
@@ -60,6 +64,25 @@ const Dashboard = () => {
             <Link to="/admin/quotes" className="text-sm font-medium text-secondary-dark hover:text-secondary flex items-center">
               View all
               <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7"/></svg>
+            </Link>
+          </div>
+        </div>
+
+        {/* Newsletter Card */}
+        <div className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-emerald-500">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-500 font-medium">Newsletter Subs</p>
+              <h3 className="text-3xl font-bold text-gray-800">{stats.subscribers}</h3>
+            </div>
+            <div className="p-3 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100">
+              <span className="material-symbols-outlined text-2xl">mail</span>
+            </div>
+          </div>
+          <div className="mt-4">
+            <Link to="/admin/newsletters" className="text-sm font-medium text-emerald-600 hover:text-emerald-700 font-bold flex items-center uppercase text-[10px] tracking-widest">
+              Manage list
+              <svg className="w-4 h-4 ml-1 font-bold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7"/></svg>
             </Link>
           </div>
         </div>

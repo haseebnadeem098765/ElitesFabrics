@@ -22,9 +22,10 @@ const Dashboard = React.lazy(() => import('./pages/admin/Dashboard'));
 const ManageContacts = React.lazy(() => import('./pages/admin/ManageContacts'));
 const ManageQuotes = React.lazy(() => import('./pages/admin/ManageQuotes'));
 const ManageContent = React.lazy(() => import('./pages/admin/ManageContent'));
+const ManageNewsletters = React.lazy(() => import('./pages/admin/ManageNewsletters'));
 
 const PublicLayout = () => (
-  <div className="bg-surface text-on-background font-body min-h-screen flex flex-col">
+  <div className="bg-surface text-on-background font-body min-h-screen flex flex-col overflow-x-hidden">
     <Navbar />
     <main className="flex-grow pt-20">
       <Outlet />
@@ -72,6 +73,7 @@ function App() {
             <Route path="contacts" element={<ManageContacts />} />
             <Route path="quotes" element={<ManageQuotes />} />
             <Route path="content" element={<ManageContent />} />
+            <Route path="newsletters" element={<ManageNewsletters />} />
           </Route>
   
           {/* Public Routes */}

@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import SEO from '../components/SEO';
+import { optimizeImage } from '../utils/cloudinary';
 
 export default function AboutUs() {
-  const content = useSelector((state) => state.content.data);
+
   return (
     <>
       <SEO 
@@ -58,18 +58,18 @@ export default function AboutUs() {
             <div className="grid grid-cols-2 gap-4 pt-12">
               <div className="space-y-4">
                 <div className="h-64 rounded-xl overflow-hidden bg-surface-container">
-                  <img className="w-full h-full object-cover" loading="lazy" data-alt="Rolls of industrial white and grey fabrics neatly stacked in a modern clean warehouse environment" src="https://res.cloudinary.com/detwuzqry/image/upload/f_auto,q_auto/v1775717701/stitcheerr_assets/ummkbuur82ve49dywemi.png"/>
+                  <img className="w-full h-full object-cover" loading="lazy" data-alt="Rolls of industrial white and grey fabrics neatly stacked in a modern clean warehouse environment" src={optimizeImage("https://res.cloudinary.com/detwuzqry/image/upload/v1775717701/stitcheerr_assets/ummkbuur82ve49dywemi.png")}/>
                 </div>
                 <div className="h-40 rounded-xl overflow-hidden bg-surface-container">
-                  <img className="w-full h-full object-cover" loading="lazy" data-alt="Close-up of a high-precision sewing machine needle working on textured fabric" src="https://res.cloudinary.com/detwuzqry/image/upload/f_auto,q_auto/v1775717702/stitcheerr_assets/kjzwdnknnl50ssyuiadz.png"/>
+                  <img className="w-full h-full object-cover" loading="lazy" data-alt="Close-up of a high-precision sewing machine needle working on textured fabric" src={optimizeImage("https://res.cloudinary.com/detwuzqry/image/upload/v1775717702/stitcheerr_assets/kjzwdnknnl50ssyuiadz.png")}/>
                 </div>
               </div>
               <div className="space-y-4 pt-8">
                 <div className="h-40 rounded-xl overflow-hidden bg-surface-container">
-                  <img className="w-full h-full object-cover" loading="lazy" data-alt="A hand touching a swatch of premium high-quality dark wool fabric" src="https://res.cloudinary.com/detwuzqry/image/upload/f_auto,q_auto/v1775717703/stitcheerr_assets/pgmevhwgiyzgnd1sdfkr.png"/>
+                  <img className="w-full h-full object-cover" loading="lazy" data-alt="A hand touching a swatch of premium high-quality dark wool fabric" src={optimizeImage("https://res.cloudinary.com/detwuzqry/image/upload/v1775717703/stitcheerr_assets/pgmevhwgiyzgnd1sdfkr.png")}/>
                 </div>
                 <div className="h-64 rounded-xl overflow-hidden bg-surface-container">
-                  <img className="w-full h-full object-cover" loading="lazy" data-alt="Macro shot of interwoven fibers showing high-precision textile detail" src="https://res.cloudinary.com/detwuzqry/image/upload/f_auto,q_auto/v1775717705/stitcheerr_assets/vyarn7qbdwul7gcp1rkj.png"/>
+                  <img className="w-full h-full object-cover" loading="lazy" data-alt="Macro shot of interwoven fibers showing high-precision textile detail" src={optimizeImage("https://res.cloudinary.com/detwuzqry/image/upload/v1775717705/stitcheerr_assets/vyarn7qbdwul7gcp1rkj.png")}/>
                 </div>
               </div>
             </div>
@@ -141,7 +141,7 @@ export default function AboutUs() {
                 <p className="text-on-primary/80 text-sm">High-visibility, fire-retardant, and ultra-durable weaves for industrial safety and mechanical environments.</p>
               </div>
               <div className="w-full md:w-48 h-32 bg-primary-container rounded-lg overflow-hidden shrink-0">
-                <img className="w-full h-full object-cover opacity-60" loading="lazy" data-alt="Sparks flying in an industrial setting with a worker wearing heavy duty protective fabric" src="https://res.cloudinary.com/detwuzqry/image/upload/f_auto,q_auto/v1775717706/stitcheerr_assets/xhjtbbqzlneqqkl0xtfp.png"/>
+                <img className="w-full h-full object-cover opacity-60" loading="lazy" data-alt="Sparks flying in an industrial setting with a worker wearing heavy duty protective fabric" src={optimizeImage("https://res.cloudinary.com/detwuzqry/image/upload/v1775717706/stitcheerr_assets/xhjtbbqzlneqqkl0xtfp.png")}/>
               </div>
             </div>
           </div>

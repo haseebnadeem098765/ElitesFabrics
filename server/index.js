@@ -75,12 +75,21 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(compression());
 app.use(cors({
-  origin: process.env.CLIENT_URL || '*',
+  origin: process.env.CLIENT_URL,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Serve uploaded files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
+  maxAge: '1d',
+  immutable: false
+})); 
+
+// Serve other static assets with long-term caching (if applicable)
+app.use(express.static(path.join(__dirname, 'public'), {
+  maxAge: '1y',
+  etag: true
+}));
 
 
 // Database connection
@@ -92,10 +101,13 @@ mongoose.connect(MONGODB_URI)
     try {
       const adminExists = await Admin.findOne();
       if (!adminExists) {
+        const adminUser = process.env.ADMIN_USER || 'admin';
+        const adminPass = process.env.ADMIN_PASS || 'admin123';
+        
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash('admin123', salt);
-        await new Admin({ username: 'admin', password: hashedPassword }).save();
-        console.log('Default Admin created -> Username: admin, Password: admin123');
+        const hashedPassword = await bcrypt.hash(adminPass, salt);
+        await new Admin({ username: adminUser, password: hashedPassword }).save();
+        console.log(`Default Admin created -> Username: ${adminUser}, Password: [PROTECTED]`);
       }
     } catch (err) {
       console.error('Failed to initialize default admin', err);
@@ -487,6 +499,14 @@ app.get('/api/admin/newsletters', auth, async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch subscribers' });
   }
 });
+app.delete('/api/admin/newsletters/:id', auth, async (req, res) => {
+  try {
+    await Newsletter.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Subscriber deleted' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete subscriber' });
+  }
+});
 
 // Content CMS Cache
 let contentCache = null;
@@ -546,3 +566,15 @@ app.post('/api/content', auth, async (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// ==========================================
+// 🚀 KEEP-ALIVE LOGIC (For Render Free Tier)
+// ==========================================
+const SERVER_URL = process.env.SERVER_URL;
+if (SERVER_URL) {
+  setInterval(() => {
+    fetch(`${SERVER_URL}/api/health`)
+      .then(() => console.log('Ping successful: Server is awake!'))
+      .catch(err => console.error('Ping failed:', err.message));
+  }, 14 * 60 * 1000); // Har 14 minute baad ping karega
+}

@@ -73,6 +73,7 @@ export default function OurFabrics() {
   useEffect(() => {
     const searchFromUrl = searchParams.get('search');
     if (searchFromUrl !== null) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLocalSearch(searchFromUrl);
     }
   }, [searchParams]);
@@ -107,9 +108,9 @@ export default function OurFabrics() {
       />
       <section className="relative h-[409px] flex items-center justify-center overflow-hidden bg-surface-container-low">
         <div className="absolute inset-0 textile-grain"></div>
-        <div className="z-10 text-center px-6 max-w-4xl">
-          <h1 className="font-headline text-5xl md:text-6xl font-extrabold text-on-surface tracking-tight mb-4">Precision in Every <span className="text-primary">Thread</span></h1>
-          <p className="text-on-surface-variant text-lg md:text-xl font-light leading-relaxed">Discover our curated collection of industrial and corporate fabrics, engineered for durability and professional excellence.</p>
+        <div className="z-10 text-center px-6 max-w-full overflow-hidden">
+          <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl font-extrabold text-on-surface tracking-tight mb-4 break-words">Precision in Every <span className="text-primary">Thread</span></h1>
+          <p className="text-on-surface-variant text-base sm:text-lg md:text-xl font-light leading-relaxed max-w-full break-words">Discover our curated collection of industrial and corporate fabrics, engineered for durability and professional excellence.</p>
         </div>
         <div className="absolute -bottom-12 -right-12 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
         <div className="absolute -top-12 -left-12 w-48 h-48 bg-tertiary/5 rounded-full blur-3xl"></div>
