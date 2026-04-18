@@ -25,9 +25,10 @@ export const fetchContent = createAsyncThunk(
   'content/fetchContent',
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`${API_URL}/content`);
+      const res = await axios.get(`${API_URL}/content`, { timeout: 5000 }); // 5 second timeout
       return res.data;
     } catch (err) {
+      console.error("Content fetch failed:", err);
       return rejectWithValue(getErrorMessage(err));
     }
   }
