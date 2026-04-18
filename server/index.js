@@ -536,7 +536,8 @@ app.get('/api/content', async (req, res) => {
     lastCacheUpdate = now;
     res.json(formattedContent);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch content' });
+    console.error('Fetch content error:', error);
+    res.status(500).json({ error: 'Failed to fetch content', details: error.message });
   }
 });
 
