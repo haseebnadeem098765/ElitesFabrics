@@ -57,6 +57,16 @@ function App() {
     }
   }, [loading]);
 
+  // Disable body scroll when loader is active
+  useEffect(() => {
+    if (showLoader) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => { document.body.style.overflow = 'auto'; };
+  }, [showLoader]);
+
   return (
     <>
       {showLoader && <Loader show={!isReady} />}
