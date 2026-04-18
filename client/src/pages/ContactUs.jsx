@@ -5,10 +5,10 @@ import SEO from '../components/SEO';
 
 const ContactUs = () => {
     const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        message: ''
+        fullName: '',
+        emailAddress: '',
+        phoneNumber: '',
+        requirements: ''
     });
 
     const dispatch = useDispatch();
@@ -74,20 +74,20 @@ const ContactUs = () => {
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
                                             <label className="text-sm font-bold text-gray-500 px-1">Full Name</label>
-                                            <input type="text" name="name" value={formData.name} onChange={handleChange} required className="w-full bg-surface-container-low border-0 rounded-xl px-4 py-4 focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="John Doe"/>
+                                            <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} required className="w-full bg-surface-container-low border-0 rounded-xl px-4 py-4 focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="John Doe"/>
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-sm font-bold text-gray-500 px-1">Email Address</label>
-                                            <input type="email" name="email" value={formData.email} onChange={handleChange} required className="w-full bg-surface-container-low border-0 rounded-xl px-4 py-4 focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="john@example.com"/>
+                                            <input type="email" name="emailAddress" value={formData.emailAddress} onChange={handleChange} required className="w-full bg-surface-container-low border-0 rounded-xl px-4 py-4 focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="john@example.com"/>
                                         </div>
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-sm font-bold text-gray-500 px-1">Phone Number</label>
-                                        <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className="w-full bg-surface-container-low border-0 rounded-xl px-4 py-4 focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="+92 3XX XXXXXXX"/>
+                                        <input type="tel" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} className="w-full bg-surface-container-low border-0 rounded-xl px-4 py-4 focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="+92 3XX XXXXXXX"/>
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-sm font-bold text-gray-500 px-1">How can we help?</label>
-                                        <textarea name="message" value={formData.message} onChange={handleChange} required rows="5" className="w-full bg-surface-container-low border-0 rounded-xl px-4 py-4 focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="Write your message here..."></textarea>
+                                        <textarea name="requirements" value={formData.requirements} onChange={handleChange} required rows="5" className="w-full bg-surface-container-low border-0 rounded-xl px-4 py-4 focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="Write your message here..."></textarea>
                                     </div>
                                     <button type="submit" disabled={loading} className="w-full bg-primary text-white font-bold py-5 rounded-xl shadow-xl shadow-primary/20 hover:translate-y-[-2px] transition-all active:scale-95 disabled:opacity-70">
                                         {loading ? 'Sending...' : 'Send Message'}

@@ -116,7 +116,7 @@ mongoose.connect(MONGODB_URI)
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes (Protected with auth)
-app.post('/api/contact', auth, async (req, res) => {
+app.post('/api/contact', async (req, res) => {
   try {
     const contact = new Contact(req.body);
     await contact.save();
