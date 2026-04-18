@@ -15,19 +15,20 @@ export default function Home() {
         keywords="uniform fabrics, school uniforms pakistan, industrial textiles, medical scrubs fabric, corporate shirting"
       />
       <section className="relative min-h-[921px] flex items-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <img
             alt={heroData.title || "Premium Uniform Fabrics"}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-center scale-105"
             src={optimizeImage(heroData.image || "https://res.cloudinary.com/detwuzqry/image/upload/v1775717707/stitcheerr_assets/bsywtsz1pgrpqo3vcxhm.png")}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/90 to-surface/40 z-10"></div>
-          <div className="absolute inset-0 fabric-texture z-20 opacity-40"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-surface/20 z-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent z-10 opacity-60"></div>
+          <div className="absolute inset-0 fabric-texture z-20 opacity-30"></div>
         </div>
         <div className="absolute inset-0 z-10 flex items-center justify-end overflow-hidden pointer-events-none">
           <img
             alt="Elite Fabrics Logo Background"
-            className="w-full max-w-full lg:w-auto h-[60%] lg:h-[110%] object-contain opacity-25 lg:translate-x-12 -translate-y-12 lg:translate-y-0 drop-shadow-2xl"
+            className="w-full max-w-full lg:w-auto h-[60%] lg:h-[85%] object-contain opacity-20 lg:translate-x-4 translate-y-4 lg:translate-y-0 drop-shadow-2xl transition-all duration-700"
             src={optimizeImage(content?.global?.images?.logo || "https://res.cloudinary.com/detwuzqry/image/upload/v1775717220/stitcheerr_assets/logo.png")}
           />
         </div>
