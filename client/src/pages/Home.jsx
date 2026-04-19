@@ -14,11 +14,11 @@ export default function Home() {
         description="Elite Fabrics provides high-quality, durable, and professional uniform fabrics for schools, offices, hospitals, and industrial safety in Pakistan."
         keywords="uniform fabrics, school uniforms pakistan, industrial textiles, medical scrubs fabric, corporate shirting"
       />
-      <section className="relative min-h-[921px] flex items-center overflow-hidden">
+      <section className="relative min-h-[60vh] md:min-h-[921px] flex items-center overflow-hidden pt-28 md:pt-0">
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
             alt={heroData.title || "Premium Uniform Fabrics"}
-            className="w-full h-full object-cover object-center scale-105"
+            className="w-full h-full object-contain md:object-cover object-center scale-100 md:scale-105"
             src={optimizeImage(heroData.image || "https://res.cloudinary.com/detwuzqry/image/upload/v1775717707/stitcheerr_assets/bsywtsz1pgrpqo3vcxhm.png")}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-surface/20 z-10"></div>
@@ -61,7 +61,12 @@ export default function Home() {
             <h2 className="text-4xl font-bold font-headline mt-2">{content?.home?.features?.title || 'Fabric Solutions'}</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {(content?.home?.features?.items || []).map((feature, idx) => (
+            {(content?.home?.features?.items?.length > 0 ? content.home.features.items : [
+              { title: 'School & College Uniforms', description: 'High-durability, wrinkle-resistant fabrics designed for daily student attire. Ensures all-day comfort and professional look.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717712/stitcheerr_assets/rrqsqdcnsphsk63cb0fv.png' },
+              { title: 'Corporate Shirting', description: 'Premium Toptex and Winnertex blends for executive professional wear and boardroom elegance.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717711/stitcheerr_assets/xmcled7x5x7g8hlj0twj.png' },
+              { title: 'Industrial Safety', description: 'High-tensile strength blended fabrics for heavy-duty industrial and factory environments.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717713/stitcheerr_assets/x3ttybp68co4x43w6bgm.png' },
+              { title: 'Medical Scrubs', description: 'Antimicrobial and breathable fabrics for healthcare professionals and hospital staff.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717715/stitcheerr_assets/vlg5f8r9k3vxwuhasb2z.png' }
+            ]).map((feature, idx) => (
               <div 
                 key={idx} 
                 className={`${idx % 3 === 0 ? 'lg:col-span-2' : ''} group relative overflow-hidden rounded-xl h-80 bg-surface-container-lowest transition-all hover:shadow-xl`}
@@ -80,11 +85,6 @@ export default function Home() {
                 </div>
               </div>
             ))}
-            {(!content?.home?.features?.items || content.home.features.items.length === 0) && (
-               <div className="col-span-full py-20 text-center text-gray-400 italic">
-                 No features configured. Use CMS to add content.
-               </div>
-            )}
           </div>
         </div>
       </section>
