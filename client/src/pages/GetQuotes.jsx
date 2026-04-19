@@ -30,7 +30,7 @@ const GetQuotes = () => {
       setIsAuthModalOpen(true);
       return;
     }
-    dispatch(submitQuote(formData));
+    dispatch(submitQuote({ formData }));
   };
 
   return (
