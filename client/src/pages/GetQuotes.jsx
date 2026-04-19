@@ -113,10 +113,12 @@ const GetQuotes = () => {
                     <label className="text-sm font-bold text-on-surface-variant px-1">Fabric Category</label>
                     <select name="fabricType" value={formData.fabricType} onChange={handleChange} required className="w-full bg-surface-container-lowest border-0 rounded-xl px-4 py-4 focus:ring-2 focus:ring-primary transition-all">
                       <option value="">Select a category</option>
-                      <option value="Corporate">Corporate / Executive</option>
-                      <option value="Industrial">Industrial Safety</option>
-                      <option value="Uniforms">School / Institutional</option>
-                      <option value="Other">Other Specialized</option>
+                      <option value="Toptex / Winnertex">Toptex / Winnertex</option>
+                      <option value="Nichiee Blend">Nichiee Blend</option>
+                      <option value="18/2 Suiting">18/2 Suiting</option>
+                      <option value="Blended 36/2">Blended 36/2</option>
+                      <option value="Kt Shirting">Kt Shirting</option>
+                      <option value="Other">Other</option>
                     </select>
                   </div>
                   <div className="space-y-2">
