@@ -586,14 +586,16 @@ app.post('/api/admin/seed-default', async (req, res) => {
         data: { 
           title: 'Fabric Solutions', 
           subtitle: 'Industry Standards', 
-          items: [
-            { title: 'School & College Uniforms', description: 'High-durability, wrinkle-resistant fabrics designed for daily student attire. Ensures all-day comfort and professional look.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717712/stitcheerr_assets/rrqsqdcnsphsk63cb0fv.png' },
-            { title: 'Corporate Shirting', description: 'Premium Toptex and Winnertex blends for executive professional wear and boardroom elegance.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717711/stitcheerr_assets/xmcled7x5x7g8hlj0twj.png' },
-            { title: 'Industrial Safety', description: 'High-tensile strength blended fabrics for heavy-duty industrial and factory environments.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717713/stitcheerr_assets/x3ttybp68co4x43w6bgm.png' },
-            { title: 'Medical Scrubs', description: 'Antimicrobial and breathable fabrics for healthcare professionals and hospital staff.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717715/stitcheerr_assets/vlg5f8r9k3vxwuhasb2z.png' }
-          ] 
-        } 
-      },
+            items: [
+              { title: 'School & College Uniforms', description: 'High-durability, wrinkle-resistant fabrics designed for daily student attire. Ensures all-day comfort and professional look.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717712/stitcheerr_assets/rrqsqdcnsphsk63cb0fv.png' },
+              { title: 'Corporate Shirting', description: 'Premium Toptex and Winnertex blends for executive professional wear and boardroom elegance.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717711/stitcheerr_assets/xmcled7x5x7g8hlj0twj.png' },
+              { title: 'Hospitality & Hotel Fabrics', description: 'Breathable and stain-resistant fabrics for chefs, front-desk staff, and housekeeping teams.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717713/stitcheerr_assets/x3ttybp68co4x43w6bgm.png' },
+              { title: 'Industrial Safety', description: 'High-tensile strength blended fabrics for heavy-duty industrial and factory environments.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717713/stitcheerr_assets/x3ttybp68co4x43w6bgm.png' },
+              { title: 'Medical Scrubs', description: 'Antimicrobial and breathable fabrics for healthcare professionals and hospital staff.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717715/stitcheerr_assets/vlg5f8r9k3vxwuhasb2z.png' },
+              { title: 'Security & Guards', description: 'Rugged and professional fabrics for private security, guards, and law enforcement uniforms.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717713/stitcheerr_assets/x3ttybp68co4x43w6bgm.png' }
+            ] 
+          } 
+        },
       { page: 'home', section: 'testimonials', data: { title: 'Trusted by Industry Leaders', items: [{ text: 'Elite Fabrics has been our consistent supplier for 5 years. The quality and durability are unmatched.', initials: 'MK', name: 'Mustafa Khan', role: 'Procurement Head, City School' }, { text: 'Their industrial fabrics meet all our safety standards. Truly a precision-driven textile partner.', initials: 'AS', name: 'Ahmed Sheikh', role: 'Operations Manager, Indus Ind.' }] } },
       { page: 'home', section: 'cta', data: { title: "Ready to Elevate Your Team's Appearance?", subtitle: "Get custom fabric swatches and a comprehensive quote for your organization within 24 hours.", buttonText: "Request a Free Quote Now" } },
       { page: 'global', section: 'images', data: { logo: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717220/stitcheerr_assets/logo.png' } }
