@@ -769,6 +769,10 @@ app.post('/api/admin/seed-default', async (req, res) => {
 
     await Content.deleteMany({});
     await Content.insertMany(seedData);
+    
+    // Clear the cache to ensure the next request gets fresh data
+    contentCache = null;
+    
     res.json({ message: 'Database seeded successfully with Uniforms!' });
   } catch (error) {
     res.status(500).json({ error: error.message });
