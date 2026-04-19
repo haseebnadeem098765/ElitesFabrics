@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { submitContactForm } from '../features/contacts/contactSlice';
+import { submitContactForm, clearMessages } from '../features/contacts/contactSlice';
 import SEO from '../components/SEO';
 import AuthModal from '../components/AuthModal';
+import PopupModal from '../components/PopupModal';
 
 const ContactUs = () => {
     const content = useSelector((state) => state.content.data);
@@ -21,6 +22,19 @@ const ContactUs = () => {
     const { loading, error, successMessage } = useSelector((state) => state.contacts);
     const { isUserAuthenticated } = useSelector((state) => state.auth);
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+    const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
+
+    useEffect(() => {
+        if (successMessage) {
+            setIsSuccessPopupOpen(true);
+            setFormData({
+                fullName: '',
+                emailAddress: '',
+                phoneNumber: '',
+                requirements: ''
+            });
+        }
+    }, [successMessage]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,6 +49,11 @@ const ContactUs = () => {
         dispatch(submitContactForm({ formData }));
     };
 
+    const handleClosePopup = () => {
+        setIsSuccessPopupOpen(false);
+        dispatch(clearMessages());
+    };
+
     const contactItems = contactSidebar.items || [
         { icon: 'location_on', title: 'Head Office', details: globalConfig.address || 'Kharadar, Karachi', link: globalConfig.mapLink || '#' },
         { icon: 'call', title: 'Call Us', details: globalConfig.phone || '03323804080', link: `tel:${globalConfig.phone || '03323804080'}` },
@@ -44,6 +63,12 @@ const ContactUs = () => {
     return (
         <div className="bg-surface">
             <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+            <PopupModal 
+                isOpen={isSuccessPopupOpen} 
+                onClose={handleClosePopup}
+                type="success"
+                message="Your message has been sent successfully! Our team will contact you shortly."
+            />
             <SEO 
               title="Contact Us - Reach Elite Fabrics" 
               description="Get in touch with Elite Fabrics for inquiries, sample requests, or industrial partnerships. We're here to help."
@@ -94,7 +119,6 @@ const ContactUs = () => {
                                     <button type="submit" disabled={loading} className="w-full bg-primary text-white font-bold py-5 rounded-xl shadow-xl shadow-primary/20 hover:translate-y-[-2px] transition-all active:scale-95 disabled:opacity-70">
                                         {loading ? 'Sending...' : 'Send Message'}
                                     </button>
-                                    {successMessage && <p className="text-green-600 font-bold text-center mt-4 bg-green-50 py-3 rounded-lg border border-green-100">{successMessage}</p>}
                                     {error && <p className="text-red-500 font-bold text-center mt-4 bg-red-50 py-3 rounded-lg border border-red-100">{error}</p>}
                                 </form>
                             </div>

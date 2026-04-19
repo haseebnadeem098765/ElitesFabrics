@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { submitQuote } from '../features/quotes/quoteSlice';
+import { submitQuote, clearMessages } from '../features/quotes/quoteSlice';
 import SEO from '../components/SEO';
 import AuthModal from '../components/AuthModal';
+import PopupModal from '../components/PopupModal';
 
 const GetQuotes = () => {
   const content = useSelector((state) => state.content.data);
@@ -23,6 +24,22 @@ const GetQuotes = () => {
   const { loading, error, successMessage } = useSelector((state) => state.quotes);
   const { isUserAuthenticated } = useSelector((state) => state.auth);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
+
+  useEffect(() => {
+    if (successMessage) {
+      setIsSuccessPopupOpen(true);
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        organization: '',
+        fabricType: '',
+        quantity: '',
+        message: ''
+      });
+    }
+  }, [successMessage]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,9 +54,20 @@ const GetQuotes = () => {
     dispatch(submitQuote({ formData }));
   };
 
+  const handleClosePopup = () => {
+    setIsSuccessPopupOpen(false);
+    dispatch(clearMessages());
+  };
+
   return (
     <>
       <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+      <PopupModal 
+        isOpen={isSuccessPopupOpen} 
+        onClose={handleClosePopup}
+        type="success"
+        message="Your quote request has been sent successfully! Our team will review your requirements and get back to you with a customized pricing plan."
+      />
       <SEO 
         title="Get a Bulk Quote - Custom Fabric Solutions" 
         description="Request a customized quote for your organization's uniform needs. Fast turnarounds and competitive industrial pricing."
@@ -139,7 +167,6 @@ const GetQuotes = () => {
                   {loading ? 'Processing...' : 'Submit Quote Request'}
                 </button>
                 
-                {successMessage && <p className="text-green-600 font-bold text-center mt-4 bg-green-50 py-3 rounded-lg border border-green-100">{successMessage}</p>}
                 {error && <p className="text-red-500 font-bold text-center mt-4 bg-red-50 py-3 rounded-lg border border-red-100">{error}</p>}
               </form>
             </div>
