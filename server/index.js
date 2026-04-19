@@ -46,7 +46,7 @@ const sendNotificationEmail = async (subject, htmlContent) => {
     console.log(`[AUTH-DEBUG] Attempting to send Admin Notification: ${subject} to ${adminEmail}`);
 
     await transporter.sendMail({
-      from: `"Stitcheerr Website" <${process.env.EMAIL_USER || 'elitesfabrics@gmail.com'}>`,
+      from: `"ElitesFabrics Website" <${process.env.EMAIL_USER || 'elitesfabrics@gmail.com'}>`,
       to: adminEmail,
       subject: subject,
       html: htmlContent

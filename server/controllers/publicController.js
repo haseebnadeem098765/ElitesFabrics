@@ -26,7 +26,7 @@ const sendNotificationEmail = async (subject, html) => {
     }
 
     await transporter.sendMail({
-      from: `"Website Form" <${process.env.EMAIL_USER}>`,
+      from: `"ElitesFabrics Website" <${process.env.EMAIL_USER}>`,
       to: adminEmail,
       subject,
       html,
