@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { submitContactForm } from '../features/contacts/contactSlice';
 import SEO from '../components/SEO';
+import AuthModal from '../components/AuthModal';
 
 const ContactUs = () => {
     const [formData, setFormData] = useState({
@@ -13,6 +14,8 @@ const ContactUs = () => {
 
     const dispatch = useDispatch();
     const { loading, error, successMessage } = useSelector((state) => state.contacts);
+    const { isUserAuthenticated } = useSelector((state) => state.auth);
+    const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,6 +23,10 @@ const ContactUs = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!isUserAuthenticated) {
+            setIsAuthModalOpen(true);
+            return;
+        }
         dispatch(submitContactForm({ formData }));
     };
 
@@ -46,6 +53,7 @@ const ContactUs = () => {
 
     return (
         <div className="bg-surface">
+            <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
             <SEO 
               title="Contact Us - Reach Elite Fabrics" 
               description="Get in touch with Elite Fabrics for inquiries, sample requests, or industrial partnerships. We're here to help."
@@ -83,7 +91,7 @@ const ContactUs = () => {
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-sm font-bold text-gray-500 px-1">Phone Number</label>
-                                        <input type="tel" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} className="w-full bg-surface-container-low border-0 rounded-xl px-4 py-4 focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="+92 3XX XXXXXXX"/>
+                                        <input type="tel" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} required className="w-full bg-surface-container-low border-0 rounded-xl px-4 py-4 focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="+92 3XX XXXXXXX"/>
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-sm font-bold text-gray-500 px-1">How can we help?</label>

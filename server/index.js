@@ -116,7 +116,7 @@ mongoose.connect(MONGODB_URI)
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes (Protected with auth)
-app.post('/api/contact', async (req, res) => {
+app.post('/api/contact', auth, async (req, res) => {
   try {
     const contact = new Contact(req.body);
     await contact.save();
@@ -148,12 +148,12 @@ app.post('/api/contact', async (req, res) => {
 
     res.status(201).json({ message: 'Contact inquiry submitted successfully!' });
   } catch (error) {
-    console.error(error);
+    console.error('Contact submission error:', error);
     res.status(500).json({ error: 'Failed to submit contact inquiry' });
   }
 });
 
-app.post('/api/quote', async (req, res) => {
+app.post('/api/quote', auth, async (req, res) => {
   try {
     const quote = new Quote(req.body);
     await quote.save();

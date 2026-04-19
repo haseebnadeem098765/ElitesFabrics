@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { submitQuote } from '../features/quotes/quoteSlice';
 import SEO from '../components/SEO';
+import AuthModal from '../components/AuthModal';
 
 const GetQuotes = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +17,8 @@ const GetQuotes = () => {
 
   const dispatch = useDispatch();
   const { loading, error, success } = useSelector((state) => state.quotes);
+  const { isUserAuthenticated } = useSelector((state) => state.auth);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,11 +26,16 @@ const GetQuotes = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!isUserAuthenticated) {
+      setIsAuthModalOpen(true);
+      return;
+    }
     dispatch(submitQuote(formData));
   };
 
   return (
     <>
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
       <SEO 
         title="Get a Bulk Quote - Custom Fabric Solutions" 
         description="Request a customized quote for your organization's uniform needs. Fast turnarounds and competitive industrial pricing."
