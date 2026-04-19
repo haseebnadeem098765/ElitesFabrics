@@ -126,7 +126,7 @@ const ContactUs = () => {
                                 <div className="relative z-10">
                                     <h4 className="font-bold text-xl mb-4">Direct WhatsApp</h4>
                                     <p className="opacity-80 mb-6">Chat with our fabric specialists for instant support and sample dispatch tracking.</p>
-                                    <a href="https://wa.me/03211660362" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-white text-on-surface font-bold rounded-xl hover:shadow-lg transition-all">
+                                    <a href="https://wa.me/923211660362" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-white text-on-surface font-bold rounded-xl hover:shadow-lg transition-all">
                                         Start Chat
                                     </a>
                                 </div>

@@ -51,7 +51,7 @@ export default function Navbar() {
           {/* Mobile Buttons + Hamburger Row */}
           <div className="flex lg:hidden items-center gap-1 sm:gap-2 shrink-0">
              <a href="tel:03323804080" className="px-2 py-1.5 text-[10px] sm:text-xs text-primary font-bold bg-primary/10 rounded-md whitespace-nowrap">Call</a>
-             <a href="https://wa.me/03211660362" className="px-2 py-1.5 bg-[#25D366] text-white text-[10px] sm:text-xs font-bold rounded-md shadow-sm whitespace-nowrap">WhatsApp</a>
+             <a href="https://wa.me/923211660362" className="px-2 py-1.5 bg-[#25D366] text-white text-[10px] sm:text-xs font-bold rounded-md shadow-sm whitespace-nowrap">WhatsApp</a>
              
              {isUserAuthenticated ? (
                  <div className="flex flex-col items-center justify-center bg-slate-50 px-2 py-0.5 rounded-md border border-slate-100 shrink-0">
@@ -101,7 +101,7 @@ export default function Navbar() {
               </button>
             )}
             
-            <a href="https://wa.me/03211660362" className="px-5 py-2 bg-[#25D366] text-white font-semibold rounded-lg shadow-md active:scale-95 transition-all">WhatsApp</a>
+            <a href="https://wa.me/923211660362" className="px-5 py-2 bg-[#25D366] text-white font-semibold rounded-lg shadow-md active:scale-95 transition-all">WhatsApp</a>
           </div>
         </div>
 
@@ -134,7 +134,7 @@ export default function Navbar() {
                     </button>
                   )}
                   <a href="tel:03323804080" className="w-full text-center px-4 py-1.5 text-primary border-2 border-primary font-semibold hover:bg-primary/5 transition-all rounded-lg">Call: 03323804080</a>
-                  <a href="https://wa.me/03211660362" className="w-full text-center px-5 py-3 bg-[#25D366] text-white font-semibold rounded-lg shadow-md active:scale-95 transition-all">WhatsApp Us</a>
+                  <a href="https://wa.me/923211660362" className="w-full text-center px-5 py-3 bg-[#25D366] text-white font-semibold rounded-lg shadow-md active:scale-95 transition-all">WhatsApp Us</a>
                 </div>
             </div>
         )}
