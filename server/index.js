@@ -153,46 +153,40 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-app.post('/api/quote', auth, async (req, res) => {
+app.post('/api/quote', async (req, res) => {
   try {
     const quote = new Quote(req.body);
     await quote.save();
 
-    // Fetch full user details for the email
-    const fullUser = await User.findById(req.user.id);
-    const userName = fullUser ? fullUser.name : 'Unknown';
-    const userEmail = fullUser ? fullUser.email : 'Unknown';
-    const userPhone = fullUser ? fullUser.phone : 'Unknown';
-
-    const { fabricCollection, specificColor, quantity, projectDetails } = req.body;
+    const { name, email, phone, organization, fabricType, quantity, message } = req.body;
     const html = `
       <div style="font-family: sans-serif; padding: 20px;">
         <h2 style="color: #1e3a8a;">New Bulk Quote Request</h2>
         
         <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
           <h3 style="margin-top:0; color: #334155;">Customer Contact Details</h3>
-          <p><strong>Name:</strong> ${userName}</p>
-          <p><strong>Email:</strong> ${userEmail}</p>
-          <p><strong>Phone Number:</strong> ${userPhone}</p>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Phone Number:</strong> ${phone}</p>
+          <p><strong>Organization:</strong> ${organization || 'N/A'}</p>
         </div>
 
         <div style="background: #eff6ff; padding: 15px; border-radius: 8px;">
           <h3 style="margin-top:0; color: #1e40af;">Order Specifications</h3>
-          <p><strong>Fabric Collection:</strong> ${fabricCollection || 'Not specified'}</p>
-          <p><strong>Specific Color:</strong> ${specificColor || 'Not specified'}</p>
+          <p><strong>Fabric Type:</strong> ${fabricType || 'Not specified'}</p>
           <p><strong>Quantity Requirements:</strong> ${quantity} Meters</p>
-          <p><strong>Project Details:</strong><br/> ${projectDetails}</p>
+          <p><strong>Message / Project Details:</strong><br/> ${message || 'N/A'}</p>
         </div>
 
         <hr style="border: 0; border-top: 1px solid #e2e8f0; margin-top: 20px;"/>
-        <p style="font-size: 12px; color: #64748b;">This request was submitted by a registered user from your website quote form.</p>
+        <p style="font-size: 12px; color: #64748b;">This request was submitted from your website quote form.</p>
       </div>
     `;
-    await sendNotificationEmail(`New Quote Request for ${fabricCollection || 'Fabric'} - From ${userName}`, html);
+    await sendNotificationEmail(`New Quote Request for ${fabricType || 'Fabric'} - From ${name}`, html);
 
     res.status(201).json({ message: 'Quote request submitted successfully!' });
   } catch (error) {
-    console.error(error);
+    console.error('Quote submission error:', error);
     res.status(500).json({ error: 'Failed to submit quote request' });
   }
 });

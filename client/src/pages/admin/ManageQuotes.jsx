@@ -26,8 +26,8 @@ const ManageQuotes = () => {
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fabric Collection</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Color & Quantity</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client Info</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fabric & Qty</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Project Details</th>
               <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
@@ -40,12 +40,16 @@ const ManageQuotes = () => {
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {new Date(quote.createdAt).toLocaleDateString()}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{quote.fabricCollection}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  <span className="block font-medium">Qty: {quote.quantity}</span>
-                  {quote.specificColor && <span>Color: {quote.specificColor}</span>}
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <div className="font-bold">{quote.name}</div>
+                  <div className="text-gray-500 text-xs">{quote.email}</div>
+                  <div className="text-gray-500 text-xs">{quote.phone}</div>
                 </td>
-                <td className="px-6 py-4 text-sm text-gray-500 max-w-xs truncate" title={quote.projectDetails}>{quote.projectDetails}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <span className="block font-medium text-gray-900">{quote.fabricType}</span>
+                  <span className="block text-xs">Qty: {quote.quantity}</span>
+                </td>
+                <td className="px-6 py-4 text-sm text-gray-500 max-w-xs truncate" title={quote.message}>{quote.message || 'N/A'}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                    <button onClick={() => handleDelete(quote._id)} className="text-red-600 hover:text-red-900">Delete</button>
                 </td>
