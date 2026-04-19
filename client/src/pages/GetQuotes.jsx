@@ -16,7 +16,7 @@ const GetQuotes = () => {
   });
 
   const dispatch = useDispatch();
-  const { loading, error, success } = useSelector((state) => state.quotes);
+  const { loading, error, successMessage } = useSelector((state) => state.quotes);
   const { isUserAuthenticated } = useSelector((state) => state.auth);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
@@ -143,7 +143,7 @@ const GetQuotes = () => {
                   {loading ? 'Processing...' : 'Submit Quote Request'}
                 </button>
                 
-                {success && <p className="text-green-600 font-bold text-center mt-4 bg-green-50 py-3 rounded-lg border border-green-100">Request submitted successfully! We will contact you shortly.</p>}
+                {successMessage && <p className="text-green-600 font-bold text-center mt-4 bg-green-50 py-3 rounded-lg border border-green-100">{successMessage}</p>}
                 {error && <p className="text-red-500 font-bold text-center mt-4 bg-red-50 py-3 rounded-lg border border-red-100">{error}</p>}
               </form>
             </div>

@@ -3,8 +3,10 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-export const submitQuote = createAsyncThunk('quotes/submit', async ({ formData }, { getState, rejectWithValue }) => {
+export const submitQuote = createAsyncThunk('quotes/submit', async (arg, { getState, rejectWithValue }) => {
     try {
+        // Robustness: handle both {formData} and raw formData if dispatched incorrectly
+        const formData = arg.formData || arg;
         const token = getState().auth.userToken;
         const response = await axios.post(`${API_URL}/quote`, formData, {
             headers: { Authorization: `Bearer ${token}` }

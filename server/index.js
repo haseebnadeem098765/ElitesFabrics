@@ -204,7 +204,7 @@ app.post('/api/quote', auth, async (req, res) => {
     res.status(201).json({ message: 'Quote request submitted successfully!' });
   } catch (error) {
     console.error('Quote submission error:', error);
-    res.status(500).json({ error: `Failed to submit quote request: ${error.message}` });
+    res.status(500).json({ error: `Failed to submit quote request (Ver 2.1): ${error.message}` });
   }
 });
 
