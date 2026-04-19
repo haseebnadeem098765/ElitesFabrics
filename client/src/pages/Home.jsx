@@ -64,10 +64,10 @@ export default function Home() {
             {(content?.home?.features?.items?.length > 0 ? content.home.features.items : [
               { title: 'School And University Uniform', description: 'High-durability, wrinkle-resistant fabrics designed for daily student attire. Ensures all-day comfort and professional look.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717712/stitcheerr_assets/rrqsqdcnsphsk63cb0fv.png' },
               { title: 'Corporate Shirting', description: 'Premium Toptex and Winnertex blends for executive professional wear and boardroom elegance.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717711/stitcheerr_assets/xmcled7x5x7g8hlj0twj.png' },
-              { title: 'Hospitality & Hotel Fabrics', description: 'Breathable and stain-resistant fabrics for chefs, front-desk staff, and housekeeping teams.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717713/stitcheerr_assets/x3ttybp68co4x43w6bgm.png' },
+              { title: 'Hospitality & Hotel Fabrics', description: 'Breathable and stain-resistant fabrics for chefs, front-desk staff, and housekeeping teams.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1776586858/stitcheerr_assets/r6sxvktceybqwkua4mxs.jpg' },
               { title: 'Industrial Safety', description: 'High-tensile strength blended fabrics for heavy-duty industrial and factory environments.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717713/stitcheerr_assets/x3ttybp68co4x43w6bgm.png' },
               { title: 'Medical Scrubs', description: 'Antimicrobial and breathable fabrics for healthcare professionals and hospital staff.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717715/stitcheerr_assets/vlg5f8r9k3vxwuhasb2z.png' },
-              { title: 'Security & Guards', description: 'Rugged and professional fabrics for private security, guards, and law enforcement uniforms.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717713/stitcheerr_assets/x3ttybp68co4x43w6bgm.png' }
+              { title: 'Security & Guards', description: 'Rugged and professional fabrics for private security, guards, and law enforcement uniforms.', image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1776587152/stitcheerr_assets/ewgoqvnm2ce0navpana8.jpg' }
             ]).map((feature, idx) => (
               <div 
                 key={idx} 
