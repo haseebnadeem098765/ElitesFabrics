@@ -38,19 +38,19 @@ export default function Footer() {
         <div className="space-y-6">
           <div className="flex items-center gap-2">
             <img
-              alt="Elite Fabrics Logo"
+              alt={content?.global?.config?.companyName || "Elite Fabrics Logo"}
               className="h-20 w-auto object-contain mix-blend-multiply"
-              src={content?.global?.images?.logo || "https://res.cloudinary.com/detwuzqry/image/upload/v1775717220/stitcheerr_assets/logo.png"}
+              src={content?.global?.config?.logo || "https://res.cloudinary.com/detwuzqry/image/upload/v1775717220/stitcheerr_assets/logo.png"}
             />
           </div>
           <p className="text-sm text-slate-500 font-body leading-relaxed">
-            Premium textile manufacturers specializing in industrial-grade uniform fabrics since 2019. Precision in Every Thread.
+            {content?.global?.config?.description || "Premium textile manufacturers specializing in industrial-grade uniform fabrics since 2019. Precision in Every Thread."}
           </p>
           <div className="flex gap-4">
-            <a href="#" className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 hover:bg-primary hover:text-white transition-all">
+            <a href={content?.global?.config?.mapLink || "#"} className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 hover:bg-primary hover:text-white transition-all">
               <span className="material-symbols-outlined text-sm">public</span>
             </a>
-            <a href="#" className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 hover:bg-primary hover:text-white transition-all">
+            <a href={content?.global?.config?.facebook || "#"} className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 hover:bg-primary hover:text-white transition-all">
               <span className="material-symbols-outlined text-sm">share</span>
             </a>
           </div>
@@ -94,11 +94,11 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 mt-16 pt-8 border-t border-slate-200 text-center flex flex-col md:flex-row justify-between items-center gap-4">
-        <span className="text-sm text-slate-500 font-body">© 2024 Elites Fabrics. Precision in Every Thread.</span>
+        <span className="text-sm text-slate-500 font-body">© 2024 {content?.global?.config?.companyName || 'Elites Fabrics'}. {content?.global?.config?.tagline || 'Precision in Every Thread.'}</span>
         <div className="flex justify-center gap-6">
-          <a href="#" className="text-slate-400 hover:text-primary transition-colors"><span className="material-symbols-outlined">public</span></a>
-          <a href="mailto:elitesfabrics@gmail.com" className="text-slate-400 hover:text-primary transition-colors"><span className="material-symbols-outlined">mail</span></a>
-          <a href="tel:03323804080" className="text-slate-400 hover:text-primary transition-colors"><span className="material-symbols-outlined">phone_in_talk</span></a>
+          <a href={content?.global?.config?.mapLink || "#"} className="text-slate-400 hover:text-primary transition-colors"><span className="material-symbols-outlined">public</span></a>
+          <a href={`mailto:${content?.global?.config?.email || 'elitesfabrics@gmail.com'}`} className="text-slate-400 hover:text-primary transition-colors"><span className="material-symbols-outlined">mail</span></a>
+          <a href={`tel:${content?.global?.config?.phone || '03323804080'}`} className="text-slate-400 hover:text-primary transition-colors"><span className="material-symbols-outlined">phone_in_talk</span></a>
         </div>
       </div>
       <PopupModal 

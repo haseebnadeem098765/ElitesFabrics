@@ -1,65 +1,21 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO';
 
-const fabricsData = [
-  {
-    id: 1,
-    title: "Toptex / Winnertex",
-    category: "Corporate",
-    featured: true,
-    description: "The gold standard for executive corporate shirting. A proprietary blend designed for crisp aesthetics and all-day comfort.",
-    image: "https://res.cloudinary.com/detwuzqry/image/upload/v1775717711/stitcheerr_assets/xmcled7x5x7g8hlj0twj.png",
-    colors: ["#1e3a8a", "#0f172a", "#f8fafc"],
-    extraColors: 5
-  },
-  {
-    id: 2,
-    title: "Nichiee Blend",
-    category: "Uniforms",
-    featured: false,
-    description: "Optimized for high-stress professional uniforms. Wrinkle-resistant and highly durable 65% Poly / 35% Cotton blend.",
-    image: "https://res.cloudinary.com/detwuzqry/image/upload/v1775717712/stitcheerr_assets/rrqsqdcnsphsk63cb0fv.png",
-    colors: ["#334155", "#64748b"],
-    extraColors: 3
-  },
-  {
-    id: 3,
-    title: "Blended 18/2",
-    category: "Industrial",
-    featured: false,
-    description: "Heavy-duty industrial grade material for factory and field wear. High tensile strength and abrasion resistant.",
-    image: "https://res.cloudinary.com/detwuzqry/image/upload/v1775717713/stitcheerr_assets/x3ttybp68co4x43w6bgm.png",
-    colors: ["#713f12", "#a16207", "#ca8a04"],
-    extraColors: 8
-  },
-  {
-    id: 4,
-    title: "KT Shirting",
-    category: "Corporate",
-    featured: true,
-    description: "Ultra-breathable weave for warm climates. Ensures professional appearance without compromising comfort.",
-    image: "https://res.cloudinary.com/detwuzqry/image/upload/v1775717715/stitcheerr_assets/vlg5f8r9k3vxwuhasb2z.png",
-    colors: ["#ffffff", "#e0e7ff", "#bfdbfe"],
-    extraColors: 12
-  },
-  {
-    id: 5,
-    title: "Blended 36/2 Professional",
-    category: "Uniforms",
-    featured: true,
-    description: "The preferred choice for corporate blazers and trousers. This 36/2 construction provides a substantial hand-feel with a refined drape.",
-    image: "https://res.cloudinary.com/detwuzqry/image/upload/v1775717716/stitcheerr_assets/tmnjxzrkdkmfg7bskrqd.png",
-    colors: ["#000000", "#1e293b"],
-    extraColors: 4
-  }
-];
-
 export default function OurFabrics() {
+  const content = useSelector((state) => state.content.data);
+  const fabricsHero = content?.fabrics?.hero || {};
+  const fabricsCatalog = content?.fabrics?.catalog?.items || [];
+  const fabricsCta = content?.fabrics?.cta || {};
+
   const [searchParams, setSearchParams] = useSearchParams();
   const [filterCategory, setFilterCategory] = useState(searchParams.get('category') || 'All');
   const [sortOrder, setSortOrder] = useState('Featured');
   const [localSearch, setLocalSearch] = useState(searchParams.get('search') || '');
+
+  // Extract unique categories from CMS data
+  const categories = ['All', ...new Set(fabricsCatalog.map(f => f.category))];
 
   // Sync URL params when internal state changes
   useEffect(() => {
@@ -69,17 +25,16 @@ export default function OurFabrics() {
     setSearchParams(params);
   }, [filterCategory, localSearch, setSearchParams]);
 
-  // Update internal state when URL params change (e.g. from Navbar search)
+  // Update internal state when URL params change
   useEffect(() => {
     const searchFromUrl = searchParams.get('search');
     if (searchFromUrl !== null) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLocalSearch(searchFromUrl);
     }
   }, [searchParams]);
 
   // Apply filtering
-  let displayedFabrics = fabricsData.filter((fabric) => {
+  let displayedFabrics = fabricsCatalog.filter((fabric) => {
     const matchesCategory = filterCategory === 'All' || fabric.category === filterCategory;
     const matchesSearch = fabric.title.toLowerCase().includes(localSearch.toLowerCase()) || 
                           fabric.description.toLowerCase().includes(localSearch.toLowerCase()) ||
@@ -109,8 +64,12 @@ export default function OurFabrics() {
       <section className="relative h-[409px] flex items-center justify-center overflow-hidden bg-surface-container-low">
         <div className="absolute inset-0 textile-grain"></div>
         <div className="z-10 text-center px-6 max-w-full overflow-hidden">
-          <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl font-extrabold text-on-surface tracking-tight mb-4 break-words">Precision in Every <span className="text-primary">Thread</span></h1>
-          <p className="text-on-surface-variant text-base sm:text-lg md:text-xl font-light leading-relaxed max-w-full break-words">Discover our curated collection of industrial and corporate fabrics, engineered for durability and professional excellence.</p>
+          <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl font-extrabold text-on-surface tracking-tight mb-4 break-words">
+            {fabricsHero.title || "Precision in Every Thread"}
+          </h1>
+          <p className="text-on-surface-variant text-base sm:text-lg md:text-xl font-light leading-relaxed max-w-full break-words">
+            {fabricsHero.subtitle || "Discover our curated collection of industrial and corporate fabrics, engineered for durability and professional excellence."}
+          </p>
         </div>
         <div className="absolute -bottom-12 -right-12 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
         <div className="absolute -top-12 -left-12 w-48 h-48 bg-tertiary/5 rounded-full blur-3xl"></div>
@@ -124,7 +83,7 @@ export default function OurFabrics() {
           </div>
           <div className="flex flex-wrap items-center gap-4">
             <div className="flex bg-surface-container p-1 rounded-lg">
-              {['All', 'Corporate', 'Industrial', 'Uniforms'].map((category) => (
+              {categories.map((category) => (
                 <button 
                   key={category}
                   onClick={() => setFilterCategory(category)}
@@ -181,7 +140,7 @@ export default function OurFabrics() {
                   <p className="text-on-surface-variant text-sm mb-6 line-clamp-3">{fabric.description}</p>
                   
                   <div className="flex gap-2 mb-8 items-center">
-                    {fabric.colors.map((color, idx) => (
+                    {fabric.colors?.map((color, idx) => (
                       <div key={idx} className="w-6 h-6 rounded-full shadow-inner border border-outline-variant/20" style={{backgroundColor: color}}></div>
                     ))}
                     <span className="text-xs text-on-surface-variant self-center ml-2">10+ Colors</span>
@@ -206,14 +165,16 @@ export default function OurFabrics() {
       <section className="bg-surface-container-low py-24 relative overflow-hidden">
         <div className="absolute inset-0 textile-grain"></div>
         <div className="max-w-7xl mx-auto px-8 relative z-10 text-center">
-          <h2 className="font-headline text-4xl font-bold mb-6">Need a Custom Fabric Solution?</h2>
-          <p className="text-on-surface-variant max-w-2xl mx-auto mb-10 text-lg">Our textile engineers can work with you to develop proprietary blends tailored to your organization&apos;s specific durability and aesthetic requirements.</p>
+          <h2 className="font-headline text-4xl font-bold mb-6">{fabricsCta.title || "Need a Custom Fabric Solution?"}</h2>
+          <p className="text-on-surface-variant max-w-2xl mx-auto mb-10 text-lg">
+            {fabricsCta.subtitle || "Our textile engineers can work with you to develop proprietary blends tailored to your organization's specific durability and aesthetic requirements."}
+          </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="tel:03323804080" className="flex items-center justify-center gap-2 px-10 py-4 bg-primary text-on-primary font-bold rounded-lg shadow-xl shadow-primary/20 hover:-translate-y-0.5 transition-transform">
+            <a href={`tel:${content?.global?.config?.phone || '03323804080'}`} className="flex items-center justify-center gap-2 px-10 py-4 bg-primary text-on-primary font-bold rounded-lg shadow-xl shadow-primary/20 hover:-translate-y-0.5 transition-transform">
               <span className="material-symbols-outlined text-xl">phone_iphone</span>
-              Call Us: 03323804080
+              Call Us: {content?.global?.config?.phone || '03323804080'}
             </a>
-            <a href="https://wa.me/923211660362" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-10 py-4 bg-[#25D366] text-white font-bold rounded-lg hover:bg-[#128C7E] shadow-xl shadow-[#25D366]/20 hover:-translate-y-0.5 transition-all">
+            <a href={`https://wa.me/${content?.global?.config?.whatsapp || '923211660362'}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-10 py-4 bg-[#25D366] text-white font-bold rounded-lg hover:bg-[#128C7E] shadow-xl shadow-[#25D366]/20 hover:-translate-y-0.5 transition-all">
               <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path>
               </svg>

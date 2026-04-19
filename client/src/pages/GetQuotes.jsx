@@ -5,6 +5,10 @@ import SEO from '../components/SEO';
 import AuthModal from '../components/AuthModal';
 
 const GetQuotes = () => {
+  const content = useSelector((state) => state.content.data);
+  const quotesHero = content?.quotes?.hero || {};
+  const quotesWhy = content?.quotes?.why || {};
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -43,13 +47,17 @@ const GetQuotes = () => {
       />
       <section className="relative h-[614px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img alt="Hero Background" className="w-full h-full object-cover" data-alt="fabrics rolls and mannequins with uniforms" src={"https://res.cloudinary.com/detwuzqry/image/upload/v1775717719/stitcheerr_assets/o93v3js5kb52n7wgvsqs.png"} />
+          <img alt="Hero Background" className="w-full h-full object-cover" src={quotesHero.image || "https://res.cloudinary.com/detwuzqry/image/upload/v1775717719/stitcheerr_assets/o93v3js5kb52n7wgvsqs.png"} />
           <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary-container/40"></div>
         </div>
         <div className="container mx-auto px-8 relative z-10">
           <div className="max-w-3xl">
-            <h1 className="text-5xl md:text-7xl font-extrabold font-headline text-on-primary mb-6 leading-tight">Precision Fabric <br/>Solutions.</h1>
-            <p className="text-xl text-primary-fixed opacity-90 font-light max-w-xl">Request a technical consultation and customized pricing for your high-volume textile requirements.</p>
+            <h1 className="text-5xl md:text-7xl font-extrabold font-headline text-on-primary mb-6 leading-tight">
+              {quotesHero.title || "Precision Fabric Solutions."}
+            </h1>
+            <p className="text-xl text-primary-fixed opacity-90 font-light max-w-xl">
+              {quotesHero.subtitle || "Request a technical consultation and customized pricing for your high-volume textile requirements."}
+            </p>
           </div>
         </div>
       </section>
@@ -58,38 +66,26 @@ const GetQuotes = () => {
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
           <div className="lg:col-span-5 space-y-12">
             <div className="space-y-4">
-              <h2 className="text-3xl font-headline font-bold text-on-surface">Why Partner with Us?</h2>
+              <h2 className="text-3xl font-headline font-bold text-on-surface">{quotesWhy.title || "Why Partner with Us?"}</h2>
               <div className="w-16 h-1 bg-tertiary"></div>
             </div>
             
             <div className="space-y-8">
-              <div className="flex gap-6">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-primary">verified</span>
+              {(quotesWhy.items || [
+                { icon: 'verified', title: 'Industrial Grade Quality', desc: 'Every batch undergoes rigorous quality control for tensile strength and color fastness.' },
+                { icon: 'local_shipping', title: 'Global Logistics', desc: 'Efficient supply chain management ensuring on-time delivery to your production facilities.' },
+                { icon: 'precision_manufacturing', title: 'Custom Manufacturing', desc: 'Specialized blends and finishes tailored specifically to your organization\'s technical specs.' }
+              ]).map((item, idx) => (
+                <div key={idx} className="flex gap-6">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-primary">{item.icon}</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg mb-1">{item.title}</h4>
+                    <p className="text-on-surface-variant text-sm">{item.desc}</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-bold text-lg mb-1">Industrial Grade Quality</h4>
-                  <p className="text-on-surface-variant text-sm">Every batch undergoes rigorous quality control for tensile strength and color fastness.</p>
-                </div>
-              </div>
-              <div className="flex gap-6">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-primary">local_shipping</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg mb-1">Global Logistics</h4>
-                  <p className="text-on-surface-variant text-sm">Efficient supply chain management ensuring on-time delivery to your production facilities.</p>
-                </div>
-              </div>
-              <div className="flex gap-6">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-primary">precision_manufacturing</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg mb-1">Custom Manufacturing</h4>
-                  <p className="text-on-surface-variant text-sm">Specialized blends and finishes tailored specifically to your organization&apos;s technical specs.</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
@@ -123,9 +119,10 @@ const GetQuotes = () => {
                       <option value="">Select a category</option>
                       <option value="Toptex / Winnertex">Toptex / Winnertex</option>
                       <option value="Nichiee Blend">Nichiee Blend</option>
-                      <option value="18/2 Suiting">18/2 Suiting</option>
-                      <option value="Blended 36/2">Blended 36/2</option>
-                      <option value="Kt Shirting">Kt Shirting</option>
+                      <option value="Hospitality Elite">Hospitality Elite</option>
+                      <option value="Industrial Strength">Industrial Strength</option>
+                      <option value="Medical Tech">Medical Tech</option>
+                      <option value="Security Rugged">Security Rugged</option>
                       <option value="Other">Other</option>
                     </select>
                   </div>

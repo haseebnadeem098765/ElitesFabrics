@@ -5,6 +5,11 @@ import SEO from '../components/SEO';
 import AuthModal from '../components/AuthModal';
 
 const ContactUs = () => {
+    const content = useSelector((state) => state.content.data);
+    const contactHero = content?.contact?.hero || {};
+    const contactSidebar = content?.contact?.sidebar || {};
+    const globalConfig = content?.global?.config || {};
+
     const [formData, setFormData] = useState({
         fullName: '',
         emailAddress: '',
@@ -30,25 +35,10 @@ const ContactUs = () => {
         dispatch(submitContactForm({ formData }));
     };
 
-    const contactInfo = [
-        {
-            icon: 'location_on',
-            title: 'Head Office',
-            details: 'Shop #01 New Molijee Street Akhund Masjid Kharadar, Karachi',
-            link: 'https://maps.app.goo.gl/7Gpw3vkvGT4fpKXY7'
-        },
-        {
-            icon: 'call',
-            title: 'Call Us',
-            details: '03323804080 (Sales) / 03211660362 (Support)',
-            link: 'tel:03323804080'
-        },
-        {
-            icon: 'mail',
-            title: 'Email Us',
-            details: 'elitesfabrics@gmail.com',
-            link: 'mailto:elitesfabrics@gmail.com'
-        }
+    const contactItems = contactSidebar.items || [
+        { icon: 'location_on', title: 'Head Office', details: globalConfig.address || 'Kharadar, Karachi', link: globalConfig.mapLink || '#' },
+        { icon: 'call', title: 'Call Us', details: globalConfig.phone || '03323804080', link: `tel:${globalConfig.phone || '03323804080'}` },
+        { icon: 'mail', title: 'Email Us', details: globalConfig.email || 'elitesfabrics@gmail.com', link: `mailto:${globalConfig.email || 'elitesfabrics@gmail.com'}` }
     ];
 
     return (
@@ -62,12 +52,16 @@ const ContactUs = () => {
             {/* Hero Section */}
             <section className="relative h-[614px] flex items-center overflow-hidden bg-surface-dim">
                 <div className="absolute inset-0 z-0">
-                    <img className="w-full h-full object-cover opacity-60" data-alt="Elite Fabrics Logo" src={"https://res.cloudinary.com/detwuzqry/image/upload/v1775717220/stitcheerr_assets/logo.png"}/>
+                    <img className="w-full h-full object-cover opacity-60" alt="Contact Hero" src={contactHero.image || globalConfig.logo || "https://res.cloudinary.com/detwuzqry/image/upload/v1775717220/stitcheerr_assets/logo.png"}/>
                     <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent"></div>
                 </div>
                 <div className="container mx-auto px-8 relative z-10 overflow-hidden">
-                    <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold font-headline mb-4 break-words">Let&apos;s Connect.</h1>
-                    <p className="text-lg sm:text-xl text-on-surface-variant max-w-full font-light break-words">Have a query about our fabric blends or need to request a bulk sample? Our team is ready to assist you.</p>
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold font-headline mb-4 break-words">
+                        {contactHero.title || "Let's Connect."}
+                    </h1>
+                    <p className="text-lg sm:text-xl text-on-surface-variant max-w-full font-light break-words">
+                        {contactHero.subtitle || "Have a query about our fabric blends or need to request a bulk sample? Our team is ready to assist you."}
+                    </p>
                 </div>
             </section>
 
@@ -108,7 +102,7 @@ const ContactUs = () => {
 
                         {/* Contact Info Sidebar */}
                         <div className="lg:col-span-5 space-y-8">
-                            {contactInfo.map((info, index) => (
+                            {contactItems.map((info, index) => (
                                 <a key={index} href={info.link} target="_blank" rel="noopener noreferrer" className="block bg-surface-container-highest p-8 rounded-3xl border border-outline-variant/10 hover:bg-surface-container-high transition-all group">
                                     <div className="flex gap-6 items-start">
                                         <div className="w-14 h-14 rounded-2xl bg-primary text-on-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
@@ -124,9 +118,9 @@ const ContactUs = () => {
 
                             <div className="bg-tertiary-container text-on-tertiary-container p-8 rounded-3xl overflow-hidden relative">
                                 <div className="relative z-10">
-                                    <h4 className="font-bold text-xl mb-4">Direct WhatsApp</h4>
-                                    <p className="opacity-80 mb-6">Chat with our fabric specialists for instant support and sample dispatch tracking.</p>
-                                    <a href="https://wa.me/923211660362" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-white text-on-surface font-bold rounded-xl hover:shadow-lg transition-all">
+                                    <h4 className="font-bold text-xl mb-4">{contactSidebar.whatsappTitle || "Direct WhatsApp"}</h4>
+                                    <p className="opacity-80 mb-6">{contactSidebar.whatsappDesc || "Chat with our fabric specialists for instant support and sample dispatch tracking."}</p>
+                                    <a href={`https://wa.me/${globalConfig.whatsapp || '923211660362'}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-white text-on-surface font-bold rounded-xl hover:shadow-lg transition-all">
                                         Start Chat
                                     </a>
                                 </div>
@@ -137,14 +131,11 @@ const ContactUs = () => {
                 </div>
             </section>
 
-            {/* Google Map Placeholder */}
+            {/* Google Map Section */}
             <section className="h-[400px] w-full bg-surface-container relative grayscale opacity-70">
-                <div className="absolute inset-0 flex items-center justify-center">
-                    <p className="text-on-surface-variant font-medium">Kharadar, Karachi - Head Office Location</p>
-                </div>
                 <iframe 
                   title="Elite Fabrics Location" 
-                  src="https://maps.google.com/maps?q=Elites+Fabrics,+New+Molijee+Street,+Akhund+Masjid,+Kharadar,+Karachi&output=embed" 
+                  src={`https://maps.google.com/maps?q=${encodeURIComponent(globalConfig.address || "Elites Fabrics, Kharadar, Karachi")}&output=embed`} 
                   className="w-full h-full border-0" 
                   allowFullScreen="" 
                   loading="lazy"
