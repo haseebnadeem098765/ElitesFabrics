@@ -27,8 +27,8 @@ const ContactUs = () => {
         {
             icon: 'location_on',
             title: 'Head Office',
-            details: 'Shop # 112, 1st Floor, Rabi Arcade, Bahadurabad, Karachi, Pakistan',
-            link: 'https://maps.google.com/?q=Rabi+Arcade+Bahadurabad+Karachi'
+            details: 'Shop #01 New Molijee Street Akhund Masjid Kharadar, Karachi',
+            link: 'https://maps.app.goo.gl/7Gpw3vkvGT4fpKXY7'
         },
         {
             icon: 'call',
@@ -132,11 +132,11 @@ const ContactUs = () => {
             {/* Google Map Placeholder */}
             <section className="h-[400px] w-full bg-surface-container relative grayscale opacity-70">
                 <div className="absolute inset-0 flex items-center justify-center">
-                    <p className="text-on-surface-variant font-medium">Bahadurabad, Karachi - Head Office Location</p>
+                    <p className="text-on-surface-variant font-medium">Kharadar, Karachi - Head Office Location</p>
                 </div>
                 <iframe 
                   title="Elite Fabrics Location" 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3619.3888741366115!2d67.0673391752!3d24.884705377914856!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33eeb6f642459%3A0xe530bd7326c7104a!2sRabi%20Arcade!5e0!3m2!1sen!2s!4v1712513456789!5m2!1sen!2s" 
+                  src="https://maps.google.com/maps?q=Elites+Fabrics,+New+Molijee+Street,+Akhund+Masjid,+Kharadar,+Karachi&output=embed" 
                   className="w-full h-full border-0" 
                   allowFullScreen="" 
                   loading="lazy"
