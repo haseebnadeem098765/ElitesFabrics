@@ -50,13 +50,17 @@ export default function Navbar() {
 
           {/* Mobile Buttons + Hamburger Row */}
           <div className="flex lg:hidden items-center gap-1 sm:gap-2 shrink-0">
-             <a href="tel:03323804080" className="px-1.5 sm:px-2 py-1.5 text-[10px] sm:text-xs text-primary font-bold bg-primary/10 rounded-md whitespace-nowrap">Call</a>
+             <a href="tel:03323804080" className="px-2 py-1.5 text-[10px] sm:text-xs text-primary font-bold bg-primary/10 rounded-md whitespace-nowrap">Call</a>
+             <a href="https://wa.me/03211660362" className="px-2 py-1.5 bg-[#25D366] text-white text-[10px] sm:text-xs font-bold rounded-md shadow-sm whitespace-nowrap">WhatsApp</a>
+             
              {isUserAuthenticated ? (
-                 <button onClick={() => dispatch(logout())} className="px-1.5 sm:px-2 py-1.5 text-[10px] sm:text-xs text-red-500 font-bold bg-red-50 rounded-md whitespace-nowrap">Logout</button>
+                 <div className="flex flex-col items-center justify-center bg-slate-50 px-2 py-0.5 rounded-md border border-slate-100 shrink-0">
+                    <span className="text-[10px] font-bold text-slate-800 leading-tight truncate max-w-[60px]">{user?.name?.split(' ')[0]}</span>
+                    <button onClick={() => dispatch(logout())} className="text-[9px] text-red-500 font-bold uppercase tracking-wider leading-tight hover:underline">Logout</button>
+                 </div>
              ) : (
                  <button onClick={() => setIsAuthModalOpen(true)} className="px-2 sm:px-3 py-1.5 text-[10px] sm:text-xs bg-primary text-white font-bold rounded-md shadow-sm whitespace-nowrap">Login</button>
              )}
-             <a href="https://wa.me/03211660362" className="px-2 sm:px-3 py-1.5 bg-[#25D366] text-white text-[10px] sm:text-xs font-bold rounded-md shadow-sm whitespace-nowrap">WhatsApp</a>
              
              <button 
                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
