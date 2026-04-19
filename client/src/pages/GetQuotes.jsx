@@ -119,10 +119,9 @@ const GetQuotes = () => {
                       <option value="">Select a category</option>
                       <option value="Toptex / Winnertex">Toptex / Winnertex</option>
                       <option value="Nichiee Blend">Nichiee Blend</option>
-                      <option value="Hospitality Elite">Hospitality Elite</option>
-                      <option value="Industrial Strength">Industrial Strength</option>
-                      <option value="Medical Tech">Medical Tech</option>
-                      <option value="Security Rugged">Security Rugged</option>
+                      <option value="18/2 Suiting">18/2 Suiting</option>
+                      <option value="Blended 36/2">Blended 36/2</option>
+                      <option value="Kt Shirting">Kt Shirting</option>
                       <option value="Other">Other</option>
                     </select>
                   </div>
