@@ -55,7 +55,7 @@ export default function Navbar() {
              
              {isUserAuthenticated ? (
                  <div className="flex flex-col items-center justify-center bg-slate-50 px-2 py-0.5 rounded-md border border-slate-100 shrink-0">
-                    <span className="text-[10px] font-bold text-slate-800 leading-tight truncate max-w-[60px]">{user?.name?.split(' ')[0]}</span>
+                    <span className="text-[10px] font-bold text-slate-800 leading-tight truncate max-w-[60px]">{user?.name?.split(' ')?.[0]}</span>
                     <button onClick={() => dispatch(logout())} className="text-[9px] text-red-500 font-bold uppercase tracking-wider leading-tight hover:underline">Logout</button>
                  </div>
              ) : (

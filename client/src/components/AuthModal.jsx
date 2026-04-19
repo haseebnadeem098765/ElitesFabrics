@@ -13,20 +13,28 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
 
   useEffect(() => {
     if (isUserAuthenticated && isOpen) {
-      if (typeof onSuccess === 'function') {
-        onSuccess();
-      }
-      onClose();
+      console.log('[AuthModal] User authenticated, closing modal...');
+      const timer = setTimeout(() => {
+        if (typeof onSuccess === 'function') {
+          try {
+            onSuccess();
+          } catch (e) {
+            console.error('[AuthModal] Error in onSuccess callback:', e);
+          }
+        }
+        onClose();
+      }, 300); // Small delay to allow state to settle
+      return () => clearTimeout(timer);
     }
   }, [isUserAuthenticated, isOpen, onSuccess, onClose]);
 
   useEffect(() => {
     if (isOpen) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setIsLogin(true); // Always default to login when opening
+      console.log('[AuthModal] Modal opened. Mode:', isLogin ? 'Login' : 'Register');
+      setIsLogin(true); 
       dispatch(clearError());
     }
-  }, [isOpen, dispatch]);
+  }, [isOpen, dispatch, isLogin]);
 
   const getTitle = () => {
     if (requiresVerification) return 'Verify Your Email';
@@ -46,7 +54,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('[AuthModal] Submitting form. Mode:', isLogin ? 'Login' : 'Register', 'Data:', formData);
+    console.log('[AuthModal] Submitting form. Mode:', isLogin ? 'Login' : 'Register');
     if (isLogin) {
       dispatch(userLogin({ email: formData.email, password: formData.password }));
     } else {
@@ -60,7 +68,12 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
   };
 
   const handleGoogleSuccess = (credentialResponse) => {
-    dispatch(googleLogin(credentialResponse.credential));
+    console.log('[AuthModal] Google Success, dispatching login...');
+    if (credentialResponse?.credential) {
+      dispatch(googleLogin(credentialResponse.credential));
+    } else {
+      console.error('[AuthModal] Google credential missing from response');
+    }
   };
 
   if (!isOpen) return null;
@@ -90,7 +103,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
               {error && (
                 <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-2 rounded-r-lg flex items-center gap-3 shadow-sm">
                   <span className="material-symbols-outlined text-red-500 text-xl">error</span>
-                  <p className="text-red-700 text-sm font-bold">{error}</p>
+                  <p className="text-red-700 text-sm font-bold">{String(error)}</p>
                 </div>
               )}
               <div>
@@ -121,7 +134,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
               <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-2 rounded-r-lg flex items-center gap-3 shadow-sm">
                 <span className="material-symbols-outlined text-red-500 text-xl">error</span>
                 <p className="text-red-700 text-sm font-bold">
-                  {error === 'User already exists' ? 'Account already exists! Please click Login instead.' : error}
+                  {String(error) === 'User already exists' ? 'Account already exists! Please click Login instead.' : String(error)}
                 </p>
               </div>
             )}

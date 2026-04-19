@@ -170,6 +170,7 @@ const authSlice = createSlice({
                     [userRegister.pending, userLogin.pending, googleLogin.pending, verifyEmail.pending]
                         .some(a => a.type === action.type),
                 (state) => {
+                    console.log('[AuthSlice] Auth pending...');
                     state.loading = true;
                     state.error = null;
                 }
@@ -180,6 +181,7 @@ const authSlice = createSlice({
                     [userLogin.fulfilled, googleLogin.fulfilled, verifyEmail.fulfilled]
                         .some(a => a.type === action.type),
                 (state, action) => {
+                    console.log('[AuthSlice] Auth fulfilled:', action.type);
                     state.loading = false;
 
                     state.userToken = action.payload.token;
@@ -199,8 +201,9 @@ const authSlice = createSlice({
                     [userRegister.rejected, userLogin.rejected, googleLogin.rejected, verifyEmail.rejected]
                         .some(a => a.type === action.type),
                 (state, action) => {
+                    console.error('[AuthSlice] Auth rejected:', action.payload);
                     state.loading = false;
-                    state.error = action.payload;
+                    state.error = String(action.payload || 'Authentication failed');
                 }
             );
     }
