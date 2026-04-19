@@ -28,6 +28,7 @@ const GetQuotes = () => {
 
   useEffect(() => {
     if (successMessage) {
+      console.log('[GetQuotes] Success detected, showing popup and clearing fields');
       setIsSuccessPopupOpen(true);
       setFormData({
         name: '',
@@ -46,22 +47,35 @@ const GetQuotes = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
+    console.log('[GetQuotes] Submit triggered. Auth State:', isUserAuthenticated);
     if (!isUserAuthenticated) {
+      console.log('[GetQuotes] Not authenticated, opening modal');
       setIsAuthModalOpen(true);
       return;
     }
+    console.log('[GetQuotes] Dispatching quote submission...', formData);
     dispatch(submitQuote({ formData }));
   };
 
+  const handleAuthSuccess = () => {
+    console.log('[GetQuotes] Login successful, auto-submitting form...');
+    handleSubmit();
+  };
+
   const handleClosePopup = () => {
+    console.log('[GetQuotes] Closing success popup');
     setIsSuccessPopupOpen(false);
     dispatch(clearMessages());
   };
 
   return (
     <>
-      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)} 
+        onSuccess={handleAuthSuccess}
+      />
       <PopupModal 
         isOpen={isSuccessPopupOpen} 
         onClose={handleClosePopup}

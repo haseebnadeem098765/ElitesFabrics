@@ -26,6 +26,7 @@ const ContactUs = () => {
 
     useEffect(() => {
         if (successMessage) {
+            console.log('[ContactUs] Success detected, showing popup and clearing fields');
             setIsSuccessPopupOpen(true);
             setFormData({
                 fullName: '',
@@ -41,15 +42,24 @@ const ContactUs = () => {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        if (e) e.preventDefault();
+        console.log('[ContactUs] Submit triggered. Auth State:', isUserAuthenticated);
         if (!isUserAuthenticated) {
+            console.log('[ContactUs] Not authenticated, opening modal');
             setIsAuthModalOpen(true);
             return;
         }
+        console.log('[ContactUs] Dispatching form submission...', formData);
         dispatch(submitContactForm({ formData }));
     };
 
+    const handleAuthSuccess = () => {
+        console.log('[ContactUs] Login successful, auto-submitting form...');
+        handleSubmit(); 
+    };
+
     const handleClosePopup = () => {
+        console.log('[ContactUs] Closing success popup');
         setIsSuccessPopupOpen(false);
         dispatch(clearMessages());
     };
@@ -62,7 +72,11 @@ const ContactUs = () => {
 
     return (
         <div className="bg-surface">
-            <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+            <AuthModal 
+                isOpen={isAuthModalOpen} 
+                onClose={() => setIsAuthModalOpen(false)} 
+                onSuccess={handleAuthSuccess}
+            />
             <PopupModal 
                 isOpen={isSuccessPopupOpen} 
                 onClose={handleClosePopup}
