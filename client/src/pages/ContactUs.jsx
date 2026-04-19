@@ -38,9 +38,9 @@ const ContactUs = () => {
         },
         {
             icon: 'mail',
-            title: 'Email Address',
-            details: 'haseebnadeem098765@gmail.com',
-            link: 'mailto:haseebnadeem098765@gmail.com'
+            title: 'Email Us',
+            details: 'elitesfabrics@gmail.com',
+            link: 'mailto:elitesfabrics@gmail.com'
         }
     ];
 
