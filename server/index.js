@@ -143,8 +143,9 @@ app.post('/api/contact', auth, async (req, res) => {
         <hr style="border: 0; border-top: 1px solid #e2e8f0; margin-top: 20px;"/>
         <p style="font-size: 12px; color: #64748b;">This inquiry was sent automatically from your website contact form.</p>
       </div>
-    `;
-    await sendNotificationEmail(`New Contact: ${fullName} (${companyName || 'Individual'})`, html);
+    // DON'T AWAIT: Send email in the background to avoid blocking the client response
+    sendNotificationEmail(`New Contact: ${fullName} (${companyName || 'Individual'})`, html)
+      .catch(err => console.error('Background Email Failed (Contact):', err.message));
 
     res.status(201).json({ message: 'Contact inquiry submitted successfully!' });
   } catch (error) {
@@ -194,12 +195,9 @@ app.post('/api/quote', auth, async (req, res) => {
       </div>
     `;
     
-    try {
-      await sendNotificationEmail(`New Quote Request for ${fabricType || 'Fabric'} - From ${name}`, html);
-    } catch (emailErr) {
-      console.error('Email notification failed for quote:', emailErr);
-      // We don't fail the request if just the email fails, since it's saved in DB
-    }
+    // DON'T AWAIT: Send email in the background to avoid blocking the client response
+    sendNotificationEmail(`New Quote Request for ${fabricType || 'Fabric'} - From ${name}`, html)
+      .catch(err => console.error('Background Email Failed (Quote):', err.message));
 
     res.status(201).json({ message: 'Quote request submitted successfully!' });
   } catch (error) {
