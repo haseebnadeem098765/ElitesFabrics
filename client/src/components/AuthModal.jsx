@@ -13,7 +13,9 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
 
   useEffect(() => {
     if (isUserAuthenticated && isOpen) {
-      onSuccess();
+      if (typeof onSuccess === 'function') {
+        onSuccess();
+      }
       onClose();
     }
   }, [isUserAuthenticated, isOpen, onSuccess, onClose]);
