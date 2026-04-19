@@ -155,10 +155,21 @@ app.post('/api/contact', auth, async (req, res) => {
 
 app.post('/api/quote', auth, async (req, res) => {
   try {
-    const quote = new Quote(req.body);
+    const { name, email, phone, organization, fabricType, quantity, message } = req.body;
+    
+    // Create new quote explicitly
+    const quote = new Quote({
+      name,
+      email,
+      phone,
+      organization,
+      fabricType,
+      quantity,
+      message
+    });
+    
     await quote.save();
 
-    const { name, email, phone, organization, fabricType, quantity, message } = req.body;
     const html = `
       <div style="font-family: sans-serif; padding: 20px;">
         <h2 style="color: #1e3a8a;">New Bulk Quote Request</h2>
@@ -182,12 +193,18 @@ app.post('/api/quote', auth, async (req, res) => {
         <p style="font-size: 12px; color: #64748b;">This request was submitted from your website quote form.</p>
       </div>
     `;
-    await sendNotificationEmail(`New Quote Request for ${fabricType || 'Fabric'} - From ${name}`, html);
+    
+    try {
+      await sendNotificationEmail(`New Quote Request for ${fabricType || 'Fabric'} - From ${name}`, html);
+    } catch (emailErr) {
+      console.error('Email notification failed for quote:', emailErr);
+      // We don't fail the request if just the email fails, since it's saved in DB
+    }
 
     res.status(201).json({ message: 'Quote request submitted successfully!' });
   } catch (error) {
     console.error('Quote submission error:', error);
-    res.status(500).json({ error: 'Failed to submit quote request' });
+    res.status(500).json({ error: `Failed to submit quote request: ${error.message}` });
   }
 });
 
