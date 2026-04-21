@@ -143,6 +143,7 @@ app.post('/api/contact', auth, async (req, res) => {
         <hr style="border: 0; border-top: 1px solid #e2e8f0; margin-top: 20px;"/>
         <p style="font-size: 12px; color: #64748b;">This inquiry was sent automatically from your website contact form.</p>
       </div>
+    `;
     // DON'T AWAIT: Send email in the background to avoid blocking the client response
     sendNotificationEmail(`New Contact: ${fullName} (${companyName || 'Individual'})`, html)
       .catch(err => console.error('Background Email Failed (Contact):', err.message));
