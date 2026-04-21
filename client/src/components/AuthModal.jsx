@@ -135,7 +135,9 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
               <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-2 rounded-r-lg flex items-center gap-3 shadow-sm">
                 <span className="material-symbols-outlined text-red-500 text-xl">error</span>
                 <p className="text-red-700 text-sm font-bold">
-                  {String(error) === 'User already exists' ? 'Account already exists! Please click Login instead.' : String(error)}
+                  {String(error).toLowerCase().includes('already registered') || String(error) === 'User already exists' 
+                    ? 'Account already exists! Please click Login instead.' 
+                    : String(error)}
                 </p>
               </div>
             )}
