@@ -30,11 +30,12 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
 
   useEffect(() => {
     if (isOpen) {
-      console.log('[AuthModal] Modal opened. Mode:', isLogin ? 'Login' : 'Register');
+      console.log('[AuthModal] Modal opened. Initializing to Login mode...');
       setIsLogin(true); 
       dispatch(clearError());
     }
-  }, [isOpen, dispatch, isLogin]);
+  }, [isOpen, dispatch]); 
+
 
   const getTitle = () => {
     if (requiresVerification) return 'Verify Your Email';
@@ -80,7 +81,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-      <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden relative animate-in fade-in zoom-in duration-300">
+      <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh] relative animate-in fade-in zoom-in duration-300">
         <button 
           onClick={onClose}
           className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"

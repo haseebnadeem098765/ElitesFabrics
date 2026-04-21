@@ -75,7 +75,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(compression());
 app.use(cors({
-  origin: process.env.CLIENT_URL,
+  origin: process.env.CLIENT_URL || 'http://localhost:5173',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -285,7 +285,7 @@ app.post('/api/user/register', async (req, res) => {
       console.log(`[AUTH-DEBUG] Email sent successfully to ${email}! MessageID: ${emailResult.messageId}`);
     } catch (err) {
       console.error(`[AUTH-DEBUG] EMAIL SENDING FAILED for ${email}:`, err.message);
-      return res.status(500).json({ error: `Failed to send verification code to ${email}. Please check your email and try again.` });
+      return res.status(500).json({ error: `Verification code failed to send. Please check your email and try again.` });
     }
 
     // Return the token to the frontend (it will be used during verification)
@@ -361,12 +361,12 @@ app.post('/api/user/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ error: 'Invalid credentials' });
+    if (!user) return res.status(400).json({ error: 'Invalid Email Or Password' });
 
     if (!user.isVerified) return res.status(403).json({ error: 'Please verify your email to login' });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ error: 'Invalid credentials' });
+    if (!isMatch) return res.status(400).json({ error: 'Incorrect Password' });
 
     const payload = { user: { id: user.id, name: user.name } };
     const token = jwt.sign(payload, process.env.JWT_SECRET || 'secret123', { expiresIn: '7d' });
