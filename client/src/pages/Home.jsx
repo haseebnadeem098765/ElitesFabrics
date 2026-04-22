@@ -18,7 +18,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
             alt={heroData.title || "Premium Uniform Fabrics"}
-            className="w-full h-full object-contain md:object-cover object-center scale-100 md:scale-105"
+            className="w-full h-full object-cover object-center scale-100 md:scale-105"
             src={optimizeImage(heroData.image || "https://res.cloudinary.com/detwuzqry/image/upload/v1775717707/stitcheerr_assets/bsywtsz1pgrpqo3vcxhm.png")}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-surface/20 z-10"></div>
