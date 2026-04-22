@@ -82,7 +82,7 @@ export default function OurFabrics() {
             <h2 className="text-3xl font-headline font-bold">The Textile Collection</h2>
           </div>
           <div className="flex flex-wrap items-center gap-4">
-            <div className="flex bg-surface-container p-1 rounded-lg">
+            <div className="flex flex-wrap bg-surface-container p-1 rounded-lg gap-1">
               {categories.map((category) => (
                 <button 
                   key={category}
