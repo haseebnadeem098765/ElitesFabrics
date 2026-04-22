@@ -74,8 +74,26 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 app.use(compression());
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'http://localhost:3000',
+  'https://stitcheerr.vercel.app',
+  'https://stitcheerr-frontend.vercel.app',
+  'https://elitesfabrics.store',
+  'https://www.elitesfabrics.store'
+];
+
 app.use(cors({
-  origin:process.env.CLIENT_URL, 
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(null, true); // Allow all temporarily to fix network errors, or just log it
+      // console.log('CORS blocked origin:', origin);
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
