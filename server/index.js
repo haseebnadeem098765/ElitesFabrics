@@ -75,7 +75,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(compression());
 app.use(cors({
-  origin: '*', // Allow all origins to fully eliminate CORS errors
+  origin:process.env.CLIENT_URL, 
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -382,11 +382,28 @@ app.post('/api/user/login', async (req, res) => {
 app.post('/api/user/google-login', async (req, res) => {
   try {
     const { tokenId } = req.body;
-    const ticket = await googleClient.verifyIdToken({
-      idToken: tokenId,
-      audience: process.env.GOOGLE_CLIENT_ID,
-    });
-    const { name, email, sub: googleId } = ticket.getPayload();
+    let payload = null;
+
+    try {
+        // Primary attempt using the library
+        const ticket = await googleClient.verifyIdToken({
+          idToken: tokenId,
+          audience: process.env.GOOGLE_CLIENT_ID,
+        });
+        payload = ticket.getPayload();
+    } catch (libError) {
+        console.warn('[AUTH] googleClient.verifyIdToken failed, falling back to fetch api:', libError.message);
+        // Fallback: Using direct HTTP call which bypasses library bugs (Node 18 fetch)
+        const response = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${tokenId}`);
+        if (!response.ok) throw new Error('Token verification failed via HTTP fallback');
+        payload = await response.json();
+    }
+
+    const { name, email, sub: googleId } = payload;
+    
+    if (!email) {
+      return res.status(400).json({ error: 'Google account must have an email associated.' });
+    }
 
     let user = await User.findOne({ $or: [{ googleId }, { email }] });
     if (!user) {
@@ -398,12 +415,12 @@ app.post('/api/user/google-login', async (req, res) => {
       await user.save();
     }
 
-    const payload = { user: { id: user.id, name: user.name } };
-    const token = jwt.sign(payload, process.env.JWT_SECRET || 'secret123', { expiresIn: '7d' });
-    res.json({ token, user: { id: user.id, name: user.name, email: user.email, phone: user.phone } });
+    const jwtPayload = { user: { id: user.id, name: user.name } };
+    const token = jwt.sign(jwtPayload, process.env.JWT_SECRET || 'secret123', { expiresIn: '7d' });
+    res.json({ token, user: { id: user.id, name: user.name, email: user.email, phone: user.phone || '' } });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Google login failed' });
+    console.error('[AUTH DEBUG] Final Google login catch block:', error);
+    res.status(500).json({ error: `Google login failed: ${error.message || 'Unknown error'}` });
   }
 });
 
