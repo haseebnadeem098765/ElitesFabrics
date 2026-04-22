@@ -75,7 +75,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(compression());
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: '*', // Allow all origins to fully eliminate CORS errors
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -227,6 +227,7 @@ app.get('/api/health', (req, res) => {
 
 // User Authentication Routes
 app.post('/api/user/register', async (req, res) => {
+  console.log('[DEBUG] Register POST received:', req.body);
   try {
     const { name, email, password, phone } = req.body;
     console.log(`[AUTH-DEBUG] Registration attempt for: ${email}`);
@@ -358,6 +359,7 @@ app.post('/api/user/verify-email', async (req, res) => {
 });
 
 app.post('/api/user/login', async (req, res) => {
+  console.log('[DEBUG] Login POST received:', req.body.email);
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });

@@ -38,7 +38,7 @@ export const adminLogin = createAsyncThunk(
             const res = await axios.post(`${API_URL}/admin/login`, credentials);
             return res.data;
         } catch (err) {
-            return rejectWithValue(err.response?.data?.error || 'Admin login failed');
+            return rejectWithValue(err.response?.data?.error || err.message || 'Admin login failed');
         }
     }
 );
@@ -53,7 +53,7 @@ export const userRegister = createAsyncThunk(
             const res = await axios.post(`${API_URL}/user/register`, userData);
             return res.data;
         } catch (err) {
-            return rejectWithValue(err.response?.data?.error || 'Registration failed');
+            return rejectWithValue(err.response?.data?.error || err.message || 'Registration failed');
         }
     }
 );
@@ -68,7 +68,7 @@ export const userLogin = createAsyncThunk(
             const res = await axios.post(`${API_URL}/user/login`, credentials);
             return res.data;
         } catch (err) {
-            return rejectWithValue(err.response?.data?.error || 'Login failed');
+            return rejectWithValue(err.response?.data?.error || err.message || 'Login failed');
         }
     }
 );
@@ -83,7 +83,7 @@ export const verifyEmail = createAsyncThunk(
             const res = await axios.post(`${API_URL}/user/verify-email`, data);
             return res.data;
         } catch (err) {
-            return rejectWithValue(err.response?.data?.error || 'Verification failed');
+            return rejectWithValue(err.response?.data?.error || err.message || 'Verification failed');
         }
     }
 );
@@ -94,7 +94,7 @@ export const googleLogin = createAsyncThunk(
             const res = await axios.post(`${API_URL}/user/google-login`, { tokenId });
             return res.data;
         } catch (err) {
-            return rejectWithValue(err.response?.data?.error || 'Google login failed');
+            return rejectWithValue(err.response?.data?.error || err.message || 'Google login failed');
         }
     }
 );
