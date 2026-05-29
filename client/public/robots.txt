@@ -7,4 +7,4 @@ Disallow: /admin/
 Disallow: /api/
 
 # Sitemap location
-Sitemap: https://elitesfabrics.com/sitemap.xml
+Sitemap: https://elitesfabrics.store/sitemap.xml
