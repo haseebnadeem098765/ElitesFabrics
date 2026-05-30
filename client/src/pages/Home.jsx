@@ -11,7 +11,7 @@ export default function Home() {
     <>
       <SEO 
         title="Premium Uniform Fabric for Schools & Industry" 
-        description="Elite Fabrics provides high-quality, durable, and professional uniform fabrics for schools, offices, hospitals, and industrial safety in Pakistan."
+        description="Elites Fabrics provides high-quality, durable, and professional uniform fabrics for schools, offices, hospitals, and industrial safety in Pakistan."
         keywords="uniform fabrics, school uniforms pakistan, industrial textiles, medical scrubs fabric, corporate shirting"
       />
       <section className="relative min-h-[60vh] md:min-h-[921px] flex items-center overflow-hidden pt-32 md:pt-20 -mt-20">

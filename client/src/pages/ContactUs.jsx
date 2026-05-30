@@ -84,9 +84,9 @@ const ContactUs = () => {
                 message="Your message has been sent successfully! Our team will contact you shortly."
             />
             <SEO 
-              title="Contact Us - Reach Elite Fabrics" 
-              description="Get in touch with Elite Fabrics for inquiries, sample requests, or industrial partnerships. We're here to help."
-              keywords="contact elite fabrics, uniform supplier contact, office address fabrics"
+              title="Contact Us - Reach Elites Fabrics" 
+              description="Get in touch with Elites Fabrics for inquiries, sample requests, or industrial partnerships. We're here to help."
+              keywords="contact elites fabrics, uniform supplier contact, office address fabrics"
             />
             {/* Hero Section */}
             <section className="relative h-[614px] flex items-center overflow-hidden bg-surface-dim">

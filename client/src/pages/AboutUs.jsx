@@ -14,8 +14,8 @@ export default function AboutUs() {
     <>
       <SEO 
         title="Our Legacy - Trusted Textile Suppliers" 
-        description="Learn about Elite Fabrics' journey in providing durable, high-quality industrial and institutional fabrics since establishment."
-        keywords="about elite fabrics, textile manufacturers pakistan, fabric suppliers karachi"
+        description="Learn about Elites Fabrics' journey in providing durable, high-quality industrial and institutional fabrics since establishment."
+        keywords="about elites fabrics, textile manufacturers pakistan, fabric suppliers karachi"
       />
       <section className="relative px-8 py-20 lg:py-32 overflow-hidden bg-surface">
         <div className="textile-grain absolute inset-0 pointer-events-none"></div>
