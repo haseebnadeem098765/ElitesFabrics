@@ -17,7 +17,7 @@ const Loader = ({ show }) => {
           
           {/* Logo */}
           <img 
-            src="https://res.cloudinary.com/detwuzqry/image/upload/v1775717220/stitcheerr_assets/logo.png" 
+            src="https://res.cloudinary.com/detwuzqry/image/upload/e_make_transparent/v1775717220/stitcheerr_assets/logo.png" 
             alt="Elite Fabrics Logo" 
             className="w-full h-full object-contain relative z-10 drop-shadow-2xl animate-bounce-slow"
           />

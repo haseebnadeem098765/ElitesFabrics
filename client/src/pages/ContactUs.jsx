@@ -90,7 +90,7 @@ const ContactUs = () => {
             {/* Hero Section */}
             <section className="relative h-[614px] flex items-center overflow-hidden bg-surface-dim">
                 <div className="absolute inset-0 z-0">
-                    <img className="w-full h-full object-cover opacity-60" alt="Contact Hero" src={contactHero.image || globalConfig.logo || "https://res.cloudinary.com/detwuzqry/image/upload/v1775717220/stitcheerr_assets/logo.png"}/>
+                    <img className="w-full h-full object-cover opacity-60" alt="Contact Hero" src={contactHero.image || globalConfig.logo || "https://res.cloudinary.com/detwuzqry/image/upload/e_make_transparent/v1775717220/stitcheerr_assets/logo.png"}/>
                     <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent"></div>
                 </div>
                 <div className="container mx-auto px-8 relative z-10 overflow-hidden">

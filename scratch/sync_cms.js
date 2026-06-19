@@ -16,7 +16,7 @@ const seedData = [
     page: 'global', 
     section: 'config', 
     data: { 
-      logo: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717220/stitcheerr_assets/logo.png',
+      logo: 'https://res.cloudinary.com/detwuzqry/image/upload/e_make_transparent/v1775717220/stitcheerr_assets/logo.png',
       companyName: 'Elites Fabrics',
       tagline: 'Precision in Every Thread.',
       description: 'Premium textile manufacturers specializing in industrial-grade uniform fabrics since 2019. Precision in Every Thread.',
@@ -159,7 +159,7 @@ const seedData = [
     data: {
       title: 'Let\'s Connect.',
       subtitle: 'Have a query about our fabric blends or need to request a bulk sample? Our team is ready to assist you.',
-      image: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717220/stitcheerr_assets/logo.png'
+      image: 'https://res.cloudinary.com/detwuzqry/image/upload/e_make_transparent/v1775717220/stitcheerr_assets/logo.png'
     }
   },
   {

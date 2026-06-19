@@ -7,7 +7,7 @@ const SEO = ({ title, description, keywords, image, url }) => {
   const siteName = 'Elites Fabrics';
   const fullTitle = title ? `${title} | ${siteName}` : siteName;
   const defaultDesc = 'Elites Fabrics provides high-quality, durable, and professional uniform fabrics for schools, offices, hospitals, and industrial safety.';
-  const defaultImage = 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717220/stitcheerr_assets/logo.png';
+  const defaultImage = 'https://res.cloudinary.com/detwuzqry/image/upload/e_make_transparent/v1775717220/stitcheerr_assets/logo.png';
   const siteUrl = 'https://elitesfabrics.store'; // Replace with actual domain when live
   const pageUrl = url || `${siteUrl}${location.pathname}`;
 

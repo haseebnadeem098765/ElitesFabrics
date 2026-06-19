@@ -29,7 +29,7 @@ export default function Home() {
           <img
             alt="Elite Fabrics Logo Background"
             className="w-full max-w-full lg:w-auto h-[60%] lg:h-[85%] object-contain opacity-20 lg:translate-x-4 translate-y-4 lg:translate-y-0 drop-shadow-2xl transition-all duration-700"
-            src={optimizeImage(content?.global?.config?.logo || "https://res.cloudinary.com/detwuzqry/image/upload/v1775717220/stitcheerr_assets/logo.png")}
+            src={optimizeImage(content?.global?.config?.logo || "https://res.cloudinary.com/detwuzqry/image/upload/e_make_transparent/v1775717220/stitcheerr_assets/logo.png")}
           />
         </div>
         <div className="container mx-auto px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12">

@@ -32,8 +32,8 @@ export default function Footer() {
           <div className="flex items-center gap-2">
             <img
               alt={content?.global?.config?.companyName || "Elite Fabrics Logo"}
-              className="h-20 w-auto object-contain mix-blend-multiply"
-              src={content?.global?.config?.logo || "https://res.cloudinary.com/detwuzqry/image/upload/v1775717220/stitcheerr_assets/logo.png"}
+              className="h-20 w-auto object-contain"
+              src={content?.global?.config?.logo || "https://res.cloudinary.com/detwuzqry/image/upload/e_make_transparent/v1775717220/stitcheerr_assets/logo.png"}
             />
           </div>
           <p className="text-sm text-slate-500 font-body leading-relaxed">

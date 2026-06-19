@@ -73,7 +73,7 @@ const seedData = [
     page: 'global',
     section: 'images',
     data: {
-      logo: 'https://res.cloudinary.com/detwuzqry/image/upload/v1775717220/stitcheerr_assets/logo.png'
+      logo: 'https://res.cloudinary.com/detwuzqry/image/upload/e_make_transparent/v1775717220/stitcheerr_assets/logo.png'
     }
   }
 ];

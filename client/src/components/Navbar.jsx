@@ -43,8 +43,8 @@ export default function Navbar() {
           <Link to="/" className="flex items-center min-w-0 mr-1 sm:mr-4 shrink-1">
             <img
               alt="Elite Fabrics Logo"
-              className="h-10 sm:h-12 md:h-16 w-auto object-contain mix-blend-multiply"
-              src={content?.global?.images?.logo || "https://res.cloudinary.com/detwuzqry/image/upload/v1775717220/stitcheerr_assets/logo.png"}
+              className="h-10 sm:h-12 md:h-16 w-auto object-contain"
+              src={content?.global?.config?.logo || content?.global?.images?.logo || "https://res.cloudinary.com/detwuzqry/image/upload/e_make_transparent/v1775717220/stitcheerr_assets/logo.png"}
             />
           </Link>
 
