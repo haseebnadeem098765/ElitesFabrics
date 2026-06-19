@@ -11,6 +11,14 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
   const dispatch = useDispatch();
   const { loading, error, isUserAuthenticated, requiresVerification, registrationToken } = useSelector((state) => state.auth);
 
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
+  if (isOpen !== prevIsOpen) {
+    setPrevIsOpen(isOpen);
+    if (isOpen) {
+      setIsLogin(true);
+    }
+  }
+
   useEffect(() => {
     if (isUserAuthenticated && isOpen) {
       console.log('[AuthModal] User authenticated, closing modal...');
@@ -30,8 +38,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }) {
 
   useEffect(() => {
     if (isOpen) {
-      console.log('[AuthModal] Modal opened. Initializing to Login mode...');
-      setIsLogin(true); 
+      console.log('[AuthModal] Modal opened. Clearing errors...');
       dispatch(clearError());
     }
   }, [isOpen, dispatch]); 

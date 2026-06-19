@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { submitContactForm, clearMessages } from '../features/contacts/contactSlice';
 import SEO from '../components/SEO';
@@ -19,29 +19,16 @@ const ContactUs = () => {
     });
 
     const dispatch = useDispatch();
-    const { loading, error, successMessage } = useSelector((state) => state.contacts);
+    const { loading, error } = useSelector((state) => state.contacts);
     const { isUserAuthenticated } = useSelector((state) => state.auth);
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
     const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
-
-    useEffect(() => {
-        if (successMessage) {
-            console.log('[ContactUs] Success detected, showing popup and clearing fields');
-            setIsSuccessPopupOpen(true);
-            setFormData({
-                fullName: '',
-                emailAddress: '',
-                phoneNumber: '',
-                requirements: ''
-            });
-        }
-    }, [successMessage]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         if (e) e.preventDefault();
         console.log('[ContactUs] Submit triggered. Auth State:', isUserAuthenticated);
         if (!isUserAuthenticated) {
@@ -50,7 +37,19 @@ const ContactUs = () => {
             return;
         }
         console.log('[ContactUs] Dispatching form submission...', formData);
-        dispatch(submitContactForm({ formData }));
+        try {
+            await dispatch(submitContactForm({ formData })).unwrap();
+            console.log('[ContactUs] Form submission succeeded');
+            setIsSuccessPopupOpen(true);
+            setFormData({
+                fullName: '',
+                emailAddress: '',
+                phoneNumber: '',
+                requirements: ''
+            });
+        } catch (err) {
+            console.error('[ContactUs] Form submission failed:', err);
+        }
     };
 
     const handleAuthSuccess = () => {

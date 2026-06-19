@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { submitQuote, clearMessages } from '../features/quotes/quoteSlice';
 import SEO from '../components/SEO';
@@ -21,14 +21,27 @@ const GetQuotes = () => {
   });
 
   const dispatch = useDispatch();
-  const { loading, error, successMessage } = useSelector((state) => state.quotes);
+  const { loading, error } = useSelector((state) => state.quotes);
   const { isUserAuthenticated } = useSelector((state) => state.auth);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
 
-  useEffect(() => {
-    if (successMessage) {
-      console.log('[GetQuotes] Success detected, showing popup and clearing fields');
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    if (e) e.preventDefault();
+    console.log('[GetQuotes] Submit triggered. Auth State:', isUserAuthenticated);
+    if (!isUserAuthenticated) {
+      console.log('[GetQuotes] Not authenticated, opening modal');
+      setIsAuthModalOpen(true);
+      return;
+    }
+    console.log('[GetQuotes] Dispatching quote submission...', formData);
+    try {
+      await dispatch(submitQuote({ formData })).unwrap();
+      console.log('[GetQuotes] Quote submission succeeded');
       setIsSuccessPopupOpen(true);
       setFormData({
         name: '',
@@ -39,23 +52,9 @@ const GetQuotes = () => {
         quantity: '',
         message: ''
       });
+    } catch (err) {
+      console.error('[GetQuotes] Quote submission failed:', err);
     }
-  }, [successMessage]);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    if (e) e.preventDefault();
-    console.log('[GetQuotes] Submit triggered. Auth State:', isUserAuthenticated);
-    if (!isUserAuthenticated) {
-      console.log('[GetQuotes] Not authenticated, opening modal');
-      setIsAuthModalOpen(true);
-      return;
-    }
-    console.log('[GetQuotes] Dispatching quote submission...', formData);
-    dispatch(submitQuote({ formData }));
   };
 
   const handleAuthSuccess = () => {

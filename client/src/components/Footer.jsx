@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { subscribeNewsletter, clearMessages } from '../features/newsletter/newsletterSlice';
@@ -9,27 +9,20 @@ export default function Footer() {
   const [popup, setPopup] = useState({ isOpen: false, type: '', message: '' });
   
   const dispatch = useDispatch();
-  const { error, successMessage } = useSelector((state) => state.newsletter);
   const content = useSelector((state) => state.content.data);
 
-  useEffect(() => {
-    if (successMessage) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setPopup({ isOpen: true, type: 'success', message: successMessage });
-      setEmail('');
-      dispatch(clearMessages());
-    }
-    if (error) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setPopup({ isOpen: true, type: 'error', message: error });
-      dispatch(clearMessages());
-    }
-  }, [successMessage, error, dispatch]);
-
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
     if (!email) return;
-    dispatch(subscribeNewsletter(email));
+    try {
+      const res = await dispatch(subscribeNewsletter(email)).unwrap();
+      setPopup({ isOpen: true, type: 'success', message: res.message || 'Subscribed successfully!' });
+      setEmail('');
+      dispatch(clearMessages());
+    } catch (err) {
+      setPopup({ isOpen: true, type: 'error', message: err || 'Subscription failed.' });
+      dispatch(clearMessages());
+    }
   };
 
   return (

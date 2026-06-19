@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateContent, uploadImage, clearMessages } from '../../features/content/contentSlice';
 
@@ -11,7 +11,7 @@ const ManageContent = () => {
     const [imageFile, setImageFile] = useState(null);
 
     const dispatch = useDispatch();
-    const { data: storeData, updateLoading, updateError, updateSuccess, uploadLoading } = useSelector((state) => state.content);
+    const { data: storeData, updateLoading, uploadLoading } = useSelector((state) => state.content);
 
     const sections = {
         home: ['hero', 'features', 'cta'],
@@ -21,30 +21,17 @@ const ManageContent = () => {
         global: ['images', 'contact_info']
     };
 
-    // Load data from store when keys or store changes
-    useEffect(() => {
+    const [prevKeys, setPrevKeys] = useState(contentKeys);
+    const [prevStoreData, setPrevStoreData] = useState(storeData);
+
+    if (contentKeys.page !== prevKeys.page || contentKeys.section !== prevKeys.section || storeData !== prevStoreData) {
+        setPrevKeys(contentKeys);
+        setPrevStoreData(storeData);
         const pageData = storeData?.[contentKeys.page] || {};
         const sectionData = pageData[contentKeys.section] || {};
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setFormData(sectionData);
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setJsonString(JSON.stringify(sectionData, null, 2));
-    }, [contentKeys, storeData]);
-
-    // Handle feedback messages
-    useEffect(() => {
-        if (updateSuccess) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-            setStatus(updateSuccess);
-            dispatch(clearMessages());
-            setTimeout(() => setStatus(''), 3000);
-        }
-        if (updateError) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-            setStatus(`Error: ${updateError}`);
-            dispatch(clearMessages());
-        }
-    }, [updateSuccess, updateError, dispatch]);
+    }
 
     const handleFormChange = (key, value) => {
         const newFormData = { ...formData, [key]: value };
@@ -52,7 +39,7 @@ const ManageContent = () => {
         setJsonString(JSON.stringify(newFormData, null, 2));
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
         setStatus('Saving...');
         let dataToSave = formData;
 
@@ -65,11 +52,20 @@ const ManageContent = () => {
             }
         }
 
-        dispatch(updateContent({
-            page: contentKeys.page,
-            section: contentKeys.section,
-            data: dataToSave
-        }));
+        try {
+            const res = await dispatch(updateContent({
+                page: contentKeys.page,
+                section: contentKeys.section,
+                data: dataToSave
+            })).unwrap();
+            
+            setStatus(res.message || 'Content updated successfully!');
+            setTimeout(() => setStatus(''), 3000);
+            dispatch(clearMessages());
+        } catch (err) {
+            setStatus(`Error: ${err}`);
+            dispatch(clearMessages());
+        }
     };
 
     const handleInitialize = () => {

@@ -25,13 +25,18 @@ export default function OurFabrics() {
     setSearchParams(params);
   }, [filterCategory, localSearch, setSearchParams]);
 
-  // Update internal state when URL params change
-  useEffect(() => {
-    const searchFromUrl = searchParams.get('search');
-    if (searchFromUrl !== null) {
+  const [prevSearchParams, setPrevSearchParams] = useState(searchParams);
+  if (searchParams !== prevSearchParams) {
+    setPrevSearchParams(searchParams);
+    const searchFromUrl = searchParams.get('search') || '';
+    if (searchFromUrl !== localSearch) {
       setLocalSearch(searchFromUrl);
     }
-  }, [searchParams]);
+    const categoryFromUrl = searchParams.get('category') || 'All';
+    if (categoryFromUrl !== filterCategory) {
+      setFilterCategory(categoryFromUrl);
+    }
+  }
 
   // Apply filtering
   let displayedFabrics = fabricsCatalog.filter((fabric) => {
